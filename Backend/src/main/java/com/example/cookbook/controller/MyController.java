@@ -1,4 +1,5 @@
-package com.example.demo;
+package com.example.cookbook.controller;
+import com.example.cookbook.dto.PersonDTO;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;

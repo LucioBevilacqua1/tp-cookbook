@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.cookbook.dto;
 
 public class PersonDTO {
     private String name;

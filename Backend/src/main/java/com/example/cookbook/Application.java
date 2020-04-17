@@ -11,11 +11,11 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = { "com" })
-public class DemoApplication {
+@SpringBootApplication(scanBasePackages={"com.example.cookbook"})
+public class Application {
 
 	public static void main(String[] args) throws IOException {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(Application.class, args);
 
 		try {
 			FileInputStream serviceAccount =
@@ -28,7 +28,6 @@ public class DemoApplication {
 		  
 		  FirebaseApp.initializeApp(options);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

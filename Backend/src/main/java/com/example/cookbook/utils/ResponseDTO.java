@@ -1,7 +1,7 @@
 
 package com.example.cookbook.utils;
-
 import java.util.Map;
+
 
 public class ResponseDTO {
     private boolean success;

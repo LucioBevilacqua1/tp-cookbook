@@ -64,28 +64,21 @@ public class UserDTO implements DtoInterface<UserDTO> {
 
     @Override
     public Map<String, Object> toJson() {
-        return Map.of("email", this.email, 
-                      "name",this.name.toJson(),
-                      "deviceToken", this.deviceToken,
-                      "photoURL", this.photoURL,
-                      "uid", this.uid);
+        return Map.of("email", this.email, "name", this.name.toJson(), "deviceToken", this.deviceToken, "photoURL",
+                this.photoURL, "uid", this.uid);
     }
 
     @SuppressWarnings("unchecked")
     public static UserDTO fromJson(Map<String, Object> json) {
-        return new UserDTO(
-            (String) json.get("email"),
-            (NameDTO) NameDTO.fromJson((Map<String,Object>) json.get("name")),
-            (String) json.get("deviceToken"),
-            (String) json.get("photoURL"),
-            (String) json.get("uid"));
+        return new UserDTO((String) json.get("email"),
+                (NameDTO) NameDTO.fromJson((Map<String, Object>) json.get("name")), (String) json.get("deviceToken"),
+                (String) json.get("photoURL"), (String) json.get("uid"));
     }
 
     @Override
     public String toString() {
-        return "UserDTO [deviceToken=" + deviceToken + ", email=" + email + ", name.firstNamme=" + name.getFirstName()+ ", name.surname=" + name.getSurname() + ", photoURL=" + photoURL
-                + ", uid=" + uid + "]";
+        return "UserDTO [deviceToken=" + deviceToken + ", email=" + email + ", name.firstNamme=" + name.getFirstName()
+                + ", name.surname=" + name.getSurname() + ", photoURL=" + photoURL + ", uid=" + uid + "]";
     }
 
-    
 }

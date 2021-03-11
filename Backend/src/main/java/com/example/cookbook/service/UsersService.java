@@ -16,19 +16,16 @@ public class UsersService implements ServiceInterface<UserDTO> {
 
     @Override
     public void create(UserDTO product) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void update(String uid, UserDTO product) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void delete(String uid) {
-        // TODO Auto-generated method stub
 
     }
     
@@ -41,7 +38,6 @@ public class UsersService implements ServiceInterface<UserDTO> {
 
     @Override
     public Collection<UserDTO> getAll() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

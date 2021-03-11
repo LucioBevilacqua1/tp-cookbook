@@ -1,4 +1,5 @@
 package com.example.cookbook.dto;
+
 import java.util.Map;
 import com.example.cookbook.interfaces.DtoInterface;
 
@@ -32,11 +33,11 @@ public class NameDTO implements DtoInterface<NameDTO> {
 
     @Override
     public Map<String, Object> toJson() {
-        return Map.of("firstName", this.firstName, "surname",this.surname);
+        return Map.of("firstName", this.firstName, "surname", this.surname);
     }
 
     public static NameDTO fromJson(Map<String, Object> json) {
-        return new NameDTO((String) json.get("firstName"),(String) json.get("surname"));
+        return new NameDTO((String) json.get("firstName"), (String) json.get("surname"));
     }
 
 }

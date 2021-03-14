@@ -32,7 +32,6 @@ public class UsersService implements ServiceInterface<UserDTO> {
     @Override
     public UserDTO get(String uid) throws InterruptedException,ExecutionException {
         UserDTO userDTO = usersRepository.get(uid);
-        System.out.println("userDTO: " + userDTO.toString()); 
         return userDTO;
     }
 

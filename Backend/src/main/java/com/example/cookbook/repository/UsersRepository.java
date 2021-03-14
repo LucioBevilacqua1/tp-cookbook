@@ -9,6 +9,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,7 +24,13 @@ public class UsersRepository implements RepositoryInterface<UserDTO> {
     }
 
     @Override
-    public void create(UserDTO product) {
+    public UserDTO create(UserDTO userDTO) throws InterruptedException, ExecutionException {
+        FirestoreClient
+            .getFirestore()
+            .collection("usersCollection")
+            .document(userDTO.getUid())
+            .set(userDTO.toJson());
+        return userDTO;
     }
 
     @Override

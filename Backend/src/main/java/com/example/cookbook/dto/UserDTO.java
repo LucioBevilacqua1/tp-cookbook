@@ -10,6 +10,7 @@ public class UserDTO implements DtoInterface<UserDTO> {
     private String deviceToken;
     private String photoURL;
     private String uid;
+    
 
     public UserDTO(String email, NameDTO name, String deviceToken, String photoURL, String uid) {
         this.email = email;

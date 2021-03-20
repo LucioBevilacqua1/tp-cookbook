@@ -31,7 +31,7 @@ public class AuthService implements ServiceInterface<SignupDTO> {
             .setEmail(signupDTO.getEmail())
             .setEmailVerified(false)
             .setPassword(signupDTO.getPassword())
-            .setPhoneNumber("+543416620881")
+            .setPhoneNumber("+543416620882")
             .setDisplayName(signupDTO.getName().toString())
             .setPhotoUrl("https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png")
             .setDisabled(false);

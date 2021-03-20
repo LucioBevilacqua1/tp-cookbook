@@ -5,8 +5,6 @@ import 'package:logging/logging.dart';
 class Configs {
   static String ggKEY2;
   static UserData currentUser;
-  static bool isGpsEnabled = true;
-  static bool locationPermissionEnabled;
   static AuthorizationStatus notificationPermissionStatus =
       AuthorizationStatus.authorized;
 

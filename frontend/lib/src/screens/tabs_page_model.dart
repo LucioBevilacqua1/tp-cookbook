@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/src/core/base_model.dart';
+import 'package:frontend/src/screens/auth/register_user/register_user_view.dart';
 import 'package:frontend/src/screens/main/home/home_view.dart';
 import 'package:frontend/src/screens/main/widgets/curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:logging/logging.dart';
@@ -34,7 +35,7 @@ class TabsPageModel extends BaseModel {
           pages[index] = HomeView();
           break;
         case 2:
-          pages[index] = HomeView();
+          pages[index] = RegisterUserView();
           break;
         default:
       }

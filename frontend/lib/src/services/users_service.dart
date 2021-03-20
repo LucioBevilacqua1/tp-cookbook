@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/src/config/configs.dart';
-import 'package:frontend/src/model/name.dart';
 import 'package:frontend/src/model/user_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -84,17 +83,6 @@ class UsersService {
       Configs.notificationPermissionStatus = AuthorizationStatus.denied;
     }
 
-    /// 2. Gets GPS and location permission
-    /// IOS doesn't break if GPS is disabled, it prompts you to enable GPS when you ask for location permisions
-    Configs.isGpsEnabled = true;
-    if (progressMessageActive) {
-      changeProgressMessage("Actualizando ubicación");
-    }
-
-    // Sets the location permission as denied
-    Configs.locationPermissionEnabled = false;
-    // Sets a default position
-
     /// 3. Signs in the user and updates user data on the db
     //user = _auth.currentUser;
 
@@ -134,5 +122,17 @@ class UsersService {
       log.severe('Error base de datos: ' + response.body.toString());
       throw Exception(jsonDecode(response.body)["msg"]);
     }
+  }
+
+  //------------------------------
+  /// Gets all users of the database
+  //------------------------------
+  Future<List<UserData>> getAllUsers() async {
+    List<UserData> allUsers = List();
+    QuerySnapshot usersSnapshot = await db.collection('usersCollection').get();
+    for (var user in usersSnapshot.docs) {
+      allUsers.add(UserData.fromDocumentSnapshot(user));
+    }
+    return allUsers;
   }
 }

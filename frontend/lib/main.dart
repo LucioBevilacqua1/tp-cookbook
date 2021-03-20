@@ -20,15 +20,15 @@ Future<void> main() async {
     print('----${rec.level.name}: ${rec.loggerName} -> ${rec.message}');
   });
   var configuredApp = AppConfig(
-    baseUrl: "https://d7e2599d2d24.ngrok.io/",
-    appTitle: "Andiamo dev",
+    baseUrl: "https://935b99e36c3f.ngrok.io/",
+    appTitle: "CookBook",
     apiKey: "AIzaSyDYu7E-0If7x4dNw0UScmhjWkzdfQbOz0A",
     child: MyApp(
       MaterialApp(
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(
-            primaryColor: Colors.pink[800],
+            primaryColor: Colors.red[800],
             primarySwatch: Colors.cyan,
             iconTheme: IconThemeData(color: Colors.white)),
         localizationsDelegates: [

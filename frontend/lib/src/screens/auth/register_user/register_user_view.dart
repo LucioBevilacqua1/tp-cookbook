@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/src/config/configs.dart';
 import 'package:frontend/src/core/base_view.dart';
 import 'package:frontend/src/core/view_state.dart';
 import 'package:frontend/src/model/user_data.dart';
@@ -29,47 +30,50 @@ class _RegisterUserViewState extends State<RegisterUserView>
           body: Container(
             child: ListView(
               children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() async {
-                        model.switchCreateMode();
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
+                Visibility(
+                  visible: Configs.currentUser.role == UserData.ADMIN,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() async {
+                          model.switchCreateMode();
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 15, top: 15),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.add,
-                                    size: 30,
-                                  ),
-                                  Text(
-                                    'Crear usuario',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                ],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 15, top: 15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add,
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      'Crear usuario',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -231,6 +235,23 @@ class _RegisterUserViewState extends State<RegisterUserView>
                 ),
                 Divider(
                   color: Colors.transparent,
+                ),
+                Visibility(
+                  visible: model.viewState == ViewState.Busy,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.orange,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.orange[800]),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 ListView.builder(
                     padding: EdgeInsets.fromLTRB(0, 0, 0, 0),

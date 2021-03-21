@@ -11,6 +11,8 @@ class UserData {
   String role;
   String photoURL;
 
+  static const String ADMIN = "admin";
+
   UserData({
     @required this.name,
     @required this.email,

@@ -22,7 +22,6 @@ Future<void> main() async {
   var configuredApp = AppConfig(
     baseUrl: "https://935b99e36c3f.ngrok.io/",
     appTitle: "CookBook",
-    apiKey: "AIzaSyDYu7E-0If7x4dNw0UScmhjWkzdfQbOz0A",
     child: MyApp(
       MaterialApp(
         initialRoute: '/',

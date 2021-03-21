@@ -38,7 +38,7 @@ public class MenuItemService implements RepositoryInterface<MenuItemDTO> {
 
     @Override
     public Collection<MenuItemDTO> getAll() throws InterruptedException, ExecutionException {
-        return null;
+        return menuItemRepository.getAll();
     }
 
 }

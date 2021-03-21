@@ -25,6 +25,11 @@ public class MenuItemDTO implements DtoInterface<NameDTO> {
         this.price = price;
     }
 
+    public static MenuItemDTO fromJson(Map<String, Object> json) {
+        return new MenuItemDTO((double) json.get("price"), (String) json.get("description"),
+                (String) json.get("photoUrl"), (String) json.get("name"));
+    }
+
     @Override
     public Map<String, Object> toJson() {
         return Map.of("price", this.price, "description", this.description, "photoUrl", this.photoUrl, "name",

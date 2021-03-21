@@ -5,9 +5,9 @@ class AppConfig extends InheritedWidget {
   final String baseUrl;
   final String appTitle;
   final Widget child;
-  final String apiKey;
 
-  AppConfig({@required this.child, @required this.baseUrl, @required this.appTitle, @required this.apiKey});
+  AppConfig(
+      {@required this.child, @required this.baseUrl, @required this.appTitle});
 
   static AppConfig of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType(aspect: AppConfig);

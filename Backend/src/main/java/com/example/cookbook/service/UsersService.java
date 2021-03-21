@@ -37,7 +37,6 @@ public class UsersService implements ServiceInterface<UserDTO> {
 
     @Override
     public Collection<UserDTO> getAll() throws InterruptedException, ExecutionException {
-        Collection<UserDTO> userDTO = usersRepository.getAll();
-        return userDTO;
+        return usersRepository.getAll();
     }
 }

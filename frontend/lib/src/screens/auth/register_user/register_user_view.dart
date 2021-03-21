@@ -249,7 +249,8 @@ class _RegisterUserViewState extends State<RegisterUserView>
                                       user.name.firstName +
                                       " " +
                                       user.name.surname),
-                                  Text("Email: " + user.email)
+                                  Text("Email: " + user.email),
+                                  Text("Rol: " + user.role)
                                 ],
                               ),
                             ),

@@ -8,6 +8,7 @@ class UserData {
   String deviceToken;
   String uid;
   Name name;
+  String role;
   String photoURL;
 
   UserData({
@@ -15,6 +16,7 @@ class UserData {
     @required this.email,
     @required this.uid,
     @required this.photoURL,
+    @required this.role,
     this.deviceToken,
   });
 
@@ -23,6 +25,7 @@ class UserData {
     this.email = item["email"];
     this.uid = item["uid"];
     this.photoURL = item["photoURL"];
+    this.role = item["role"] ?? "indefinido";
     this.deviceToken = item["deviceToken"];
   }
 
@@ -31,6 +34,7 @@ class UserData {
     this.email = item.data()["email"];
     this.uid = item.data()["uid"];
     this.photoURL = item.data()["photoURL"];
+    this.role = item.data()["role"] ?? "indefinido";
     this.deviceToken = item.data()["deviceToken"];
   }
 
@@ -39,6 +43,7 @@ class UserData {
         'email': this.email,
         'uid': this.uid,
         'photoURL': this.photoURL,
+        'role': this.role ?? "indefinido",
         'deviceToken': this.deviceToken,
       };
 }

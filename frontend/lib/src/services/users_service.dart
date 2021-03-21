@@ -39,23 +39,6 @@ class UsersService {
     }
   }
 
-  /// UPDATES USER'S LAST SEEN AND DEVICE TOKEN
-  /// * This function runs on every sign in
-  Future updateLastSeenAndDeviceToken(String uid) async {
-    var url = usersApiUrl + "updateLastSeenAndDeviceToken/" + uid;
-    String token = await _firebaseMessaging.getToken();
-    var body = {'token': token};
-    var response =
-        await http.put(url, body: jsonEncode(body), headers: Configs.headers);
-    if (jsonDecode(response.body)["success"]) {
-      log.info("LastSeen y deviceToken actualizados con éxito");
-      log.info("response: " + response.body.toString());
-    } else {
-      log.severe('Error base de datos: ' + response.body.toString());
-      throw Exception(jsonDecode(response.body)["msg"]);
-    }
-  }
-
   // -----------------------------------------------------
   /// Last step before the user can access to `/home`
   ///
@@ -93,9 +76,7 @@ class UsersService {
       user = _auth.currentUser;
       user.reload();
     }*/
-    if (progressMessageActive) {
-      changeProgressMessage("Iniciando sesión");
-    }
+
     UserData currentUser = await getCurrentUserAndUpdateUserData(
         "ZY7J6dSoKsUoI2TTCdIbl7MGh0n1", deviceToken);
     if (progressMessageActive) {
@@ -104,12 +85,17 @@ class UsersService {
     Configs.setCurrentUser(currentUser);
   }
 
-  /*------------------------------
-   set last seen, device token and referral Id and returns current user
-  --------------------------------*/
+  //------------------------------
+  /// Gets current user
+  ///
+  /// Sets last seen and device token
+  ///
+  /// `@returns` current user
+  //------------------------------
   Future<UserData> getCurrentUserAndUpdateUserData(
       String uid, deviceToken) async {
-    String url = usersApiUrl + "getCurrentUserAndUpdateUserData/" + uid;
+    String url =
+        usersApiUrl + "getCurrentUserAndUpdateUserData/" + uid + ".json";
     var body = {"deviceToken": deviceToken};
     log.info("Url para getCurrentUserAndUpdateUserData: " + url);
 
@@ -129,10 +115,17 @@ class UsersService {
   //------------------------------
   Future<List<UserData>> getAllUsers() async {
     List<UserData> allUsers = List();
-    QuerySnapshot usersSnapshot = await db.collection('usersCollection').get();
-    for (var user in usersSnapshot.docs) {
-      allUsers.add(UserData.fromDocumentSnapshot(user));
+    String urlGetAllUsers = usersApiUrl + "getAllUsers.json";
+    var response = await http.get(urlGetAllUsers, headers: Configs.headers);
+    if (jsonDecode(response.body)["success"]) {
+      log.info("Referral id agregado con éxito");
+      for (var user in jsonDecode(response.body)["data"]["users"]) {
+        allUsers.add(UserData.fromJson(user));
+      }
+      return allUsers;
+    } else {
+      log.severe('Error base de datos: ' + response.body.toString());
+      throw Exception(jsonDecode(response.body)["msg"]);
     }
-    return allUsers;
   }
 }

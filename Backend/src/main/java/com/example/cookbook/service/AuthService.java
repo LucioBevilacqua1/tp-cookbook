@@ -25,22 +25,20 @@ public class AuthService implements ServiceInterface<SignupDTO> {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        // Creates the user in Firebase 
-        // authentication service.
+        // Creates the user in Firebase authentication service.
         CreateRequest request = new CreateRequest()
-            .setEmail(signupDTO.getEmail())
-            .setEmailVerified(false)
-            .setPassword(signupDTO.getPassword())
-            .setPhoneNumber("+543416620882")
-            .setDisplayName(signupDTO.getName().toString())
-            .setPhotoUrl("https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png")
-            .setDisabled(false);
+        .setEmail(signupDTO.getEmail())
+        .setEmailVerified(false)
+        .setPassword(signupDTO.getPassword()).setPhoneNumber("+543416620882")
+        .setDisplayName(signupDTO.getName().toString())
+        .setPhotoUrl("https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png")
+        .setDisabled(false);
         UserRecord userRecord = auth.createUser(request);
 
-        UserDTO userDTO = new UserDTO(signupDTO.getEmail(), signupDTO.getName(), "", userRecord.getPhotoUrl(), userRecord.getUid());
+        UserDTO userDTO = new UserDTO(signupDTO.getEmail(), signupDTO.getName(), "", userRecord.getPhotoUrl(),
+                userRecord.getUid(), signupDTO.getRole());
 
-        // Creates the user in
-        // Firestore database
+        // Creates the user in Firestore database
         UserDTO createdUserDTO = usersRepository.create(userDTO);
         return createdUserDTO;
     }
@@ -59,7 +57,7 @@ public class AuthService implements ServiceInterface<SignupDTO> {
     public void delete(String uid) {
 
     }
-    
+
     @Override
     public SignupDTO get(String uid) {
         return null;

@@ -28,15 +28,16 @@ public class UsersService implements ServiceInterface<UserDTO> {
     public void delete(String uid) {
 
     }
-    
+
     @Override
-    public UserDTO get(String uid) throws InterruptedException,ExecutionException {
+    public UserDTO get(String uid) throws InterruptedException, ExecutionException {
         UserDTO userDTO = usersRepository.get(uid);
         return userDTO;
     }
 
     @Override
-    public Collection<UserDTO> getAll() {
-        return null;
+    public Collection<UserDTO> getAll() throws InterruptedException, ExecutionException {
+        Collection<UserDTO> userDTO = usersRepository.getAll();
+        return userDTO;
     }
 }

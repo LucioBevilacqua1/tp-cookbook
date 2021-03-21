@@ -8,5 +8,5 @@ public interface ServiceInterface<T> {
     public abstract void update(String uid, T t);
     public abstract void delete(String uid);
     public abstract T get(String uid) throws InterruptedException,ExecutionException;
-    public abstract Collection<T> getAll();
+    public abstract Collection<T> getAll() throws InterruptedException,ExecutionException;
 }

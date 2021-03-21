@@ -27,7 +27,7 @@ Future<void> main() async {
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(
-            primaryColor: Colors.orange,
+            primaryColor: Colors.teal,
             primarySwatch: Colors.cyan,
             iconTheme: IconThemeData(color: Colors.white)),
         localizationsDelegates: [

@@ -37,13 +37,13 @@ class _RegisterUserViewState extends State<RegisterUserView>
                         EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
                     child: InkWell(
                       onTap: () {
-                        setState(() async {
+                        setState(() {
                           model.switchCreateMode();
                         });
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.green,
+                          color: Colors.greenAccent[700],
                           borderRadius: BorderRadius.all(
                             Radius.circular(30),
                           ),
@@ -188,7 +188,7 @@ class _RegisterUserViewState extends State<RegisterUserView>
                             height: 45,
                             width: _width / 1.2,
                             decoration: BoxDecoration(
-                                color: Colors.green[600],
+                                color: Colors.green[800],
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(50))),
                             child: Center(

@@ -89,7 +89,7 @@ class _TabsPageViewState extends State<TabsPageView>
           key: bottomBarKey,
           buttonBackgroundColor: Colors.white,
           backgroundColor: Colors.white,
-          color: Colors.orange,
+          color: Color(0xFFC75414),
           items: <Icon>[
             Icon(
               Icons.menu_book,

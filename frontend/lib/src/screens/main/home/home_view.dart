@@ -32,13 +32,13 @@ class HomeViewState extends State<HomeView> {
                       EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
                   child: InkWell(
                     onTap: () {
-                      setState(() async {
+                      setState(() {
                         model.switchCreateMode();
                       });
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.greenAccent[700],
                         borderRadius: BorderRadius.all(
                           Radius.circular(30),
                         ),
@@ -156,7 +156,7 @@ class HomeViewState extends State<HomeView> {
                           height: 45,
                           width: _width / 1.2,
                           decoration: BoxDecoration(
-                              color: Colors.green[600],
+                              color: Colors.green[800],
                               borderRadius:
                                   BorderRadius.all(Radius.circular(50))),
                           child: Center(
@@ -174,30 +174,76 @@ class HomeViewState extends State<HomeView> {
                         ),
                       ),
                       Divider(
-                        height: 50,
+                        height: 40,
                         color: Colors.transparent,
                       )
                     ],
                   ),
                 ),
               ),
-              Divider(),
+              Divider(
+                color: Colors.transparent,
+              ),
               Container(
                 width: _width,
-                color: Colors.orange,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 20, top: 20),
-                        child: Text(
-                          'Comidas/Bebidas',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                color: Colors.teal,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 20, top: 20, left: 65),
+                          child: Text(
+                            'Comidas/Bebidas',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
+                    InkWell(
+                      onTap: () {
+                        List args = [model.orderItems];
+                        Navigator.of(context)
+                            .pushNamed('/previewOrderView', arguments: args);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Icon(
+                                Icons.shopping_cart,
+                                size: 40,
+                              ),
+                            ),
+                            Positioned(
+                                right: 7,
+                                child: Container(
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child: Center(
+                                    child: Text(
+                                      model.orderItems.length.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -229,16 +275,23 @@ class HomeViewState extends State<HomeView> {
                     MenuItem menuItem = model.allMenuItems[index];
                     return Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text(menuItem.name),
-                                Text("Descripción: " + menuItem.description),
-                                Text("Precio: " +
-                                    menuItem.price.toStringAsFixed(1))
-                              ],
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              model.orderItems.add(menuItem);
+                            });
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text(menuItem.name),
+                                  Text("Descripción: " + menuItem.description),
+                                  Text("Precio: " +
+                                      menuItem.price.toStringAsFixed(1))
+                                ],
+                              ),
                             ),
                           ),
                         ));

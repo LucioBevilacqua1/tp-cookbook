@@ -11,10 +11,12 @@ class HomeModel extends BaseModel {
 
   MenuItemService menuItemService;
   List<MenuItem> allMenuItems = List();
+  List<MenuItem> orderItems = List();
   TextEditingController nameTextController = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
   TextEditingController priceTextController = TextEditingController();
   bool createMode = false;
+
   ViewState viewState = ViewState.Busy;
   onModelReady(BuildContext context) async {
     menuItemService = MenuItemService(context: context);

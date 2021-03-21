@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
 import 'nav_button.dart';
@@ -41,7 +40,6 @@ class CurvedNavigationBar extends StatefulWidget {
 
 class CurvedNavigationBarState extends State<CurvedNavigationBar>
     with SingleTickerProviderStateMixin {
-  final Logger log = Logger('CurvedNavigationBar');
   double _startingPos;
   int _endingIndex = 0;
   double _pos;
@@ -56,7 +54,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     super.initState();
     _icon = _icon = Icon(
       widget.items[_endingIndex].icon,
-      color: Colors.orange[700],
+      color: Color(0xFFC75414),
       size: widget.items[_endingIndex].size,
     );
     _length = widget.items.length;
@@ -71,7 +69,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
         if ((endingPos - _pos).abs() < (_startingPos - _pos).abs()) {
           _icon = Icon(
             widget.items[_endingIndex].icon,
-            color: Colors.orange[700],
+            color: Color(0xFFC75414),
             size: widget.items[_endingIndex].size,
           );
         }
@@ -84,7 +82,6 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   @override
   void didUpdateWidget(CurvedNavigationBar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    log.info(_animationController.status);
     if (oldWidget.index != widget.index) {
       final newPosition = widget.index / _length;
       _startingPos = _pos;

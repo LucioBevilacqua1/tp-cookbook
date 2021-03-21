@@ -19,7 +19,7 @@ class AuthService {
   //------------------------------
   Future<UserData> signup(
       {String email, String password, String name, String role}) async {
-    String signupUrl = authApiUrl + "signup";
+    String signupUrl = authApiUrl + "signup.json";
     var body = {
       "email": email,
       "password": password,

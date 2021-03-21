@@ -39,7 +39,8 @@ class CurvedNavigationBar extends StatefulWidget {
   CurvedNavigationBarState createState() => CurvedNavigationBarState();
 }
 
-class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTickerProviderStateMixin {
+class CurvedNavigationBarState extends State<CurvedNavigationBar>
+    with SingleTickerProviderStateMixin {
   final Logger log = Logger('CurvedNavigationBar');
   double _startingPos;
   int _endingIndex = 0;
@@ -55,7 +56,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
     super.initState();
     _icon = _icon = Icon(
       widget.items[_endingIndex].icon,
-      color: Colors.pink[800],
+      color: Colors.orange[700],
       size: widget.items[_endingIndex].size,
     );
     _length = widget.items.length;
@@ -70,11 +71,12 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
         if ((endingPos - _pos).abs() < (_startingPos - _pos).abs()) {
           _icon = Icon(
             widget.items[_endingIndex].icon,
-            color: Colors.pink[800],
+            color: Colors.orange[700],
             size: widget.items[_endingIndex].size,
           );
         }
-        _buttonHide = (1 - ((middle - _pos) / (_startingPos - middle)).abs()).abs();
+        _buttonHide =
+            (1 - ((middle - _pos) / (_startingPos - middle)).abs()).abs();
       });
     });
   }
@@ -87,7 +89,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
       final newPosition = widget.index / _length;
       _startingPos = _pos;
       _endingIndex = widget.index;
-      _animationController.animateTo(newPosition, duration: widget.animationDuration, curve: widget.animationCurve);
+      _animationController.animateTo(newPosition,
+          duration: widget.animationDuration, curve: widget.animationCurve);
     }
   }
 
@@ -177,7 +180,8 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTic
     setState(() {
       _startingPos = _pos;
       _endingIndex = index;
-      _animationController.animateTo(newPosition, duration: widget.animationDuration, curve: widget.animationCurve);
+      _animationController.animateTo(newPosition,
+          duration: widget.animationDuration, curve: widget.animationCurve);
     });
   }
 }

@@ -11,7 +11,7 @@ import '../../service_locator.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushname
-    final args = settings.arguments;
+    //final args = settings.arguments;
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(

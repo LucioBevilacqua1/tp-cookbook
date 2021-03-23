@@ -8,9 +8,11 @@ import com.example.cookbook.dto.SignupDTO;
 import com.example.cookbook.dto.UserDTO;
 import com.example.cookbook.interfaces.ServiceInterface;
 import com.example.cookbook.repository.UsersRepository;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.ActionCodeSettings.Builder;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,10 +49,14 @@ public class AuthService implements ServiceInterface<SignupDTO> {
         return createdUserDTO;
     }
 
-    public UserDTO signin(SigninDTO signinDTO) throws InterruptedException, ExecutionException, FirebaseAuthException {
+    public String signin(SigninDTO signinDTO) throws InterruptedException, ExecutionException, FirebaseAuthException {
 
         this.auth = FirebaseAuth.getInstance();
-        return new UserDTO();
+
+        ActionCodeSettings settings = ActionCodeSettings.builder().setAndroidPackageName("com.example.Cookbook.dev").build();
+        String result = this.auth.generateSignInWithEmailLink(signinDTO.getEmail(), settings);
+        
+        return result;
     }
 
     @Override

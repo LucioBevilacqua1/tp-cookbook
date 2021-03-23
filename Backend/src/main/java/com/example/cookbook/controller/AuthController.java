@@ -37,11 +37,11 @@ public class AuthController {
         }
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    ResponseEntity<UserDTO> signin(@RequestBody SigninDTO signinDTO) {
+    @RequestMapping(value = "/signin.json", method = RequestMethod.POST)
+    ResponseEntity<String> signin(@RequestBody SigninDTO signinDTO) {
         try {
-            UserDTO userDTO = authService.signin(signinDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+            String link = authService.signin(signinDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(link);
         } catch(Exception exception) {
             throw new ResponseStatusException(
            HttpStatus.INTERNAL_SERVER_ERROR, "Sign in error", exception);

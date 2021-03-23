@@ -36,9 +36,15 @@
 		</dependency>
 
 		<dependency>
-  			<groupId>com.google.firebase</groupId>
+			<groupId>com.google.firebase</groupId>
 			<artifactId>firebase-admin</artifactId>
-			<version>6.8.1</version>
+			<version>7.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-auth</artifactId>
+			<version>11.2.0</version>
 		</dependency>
 
 		<dependency>

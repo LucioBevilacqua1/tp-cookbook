@@ -10,17 +10,22 @@ public class UserDTO implements DtoInterface<UserDTO> {
     private String deviceToken;
     private String photoURL;
     private String uid;
-    
+    private String role;
 
-    public UserDTO(String email, NameDTO name, String deviceToken, String photoURL, String uid) {
+    public UserDTO(String email, NameDTO name, String deviceToken, String photoURL, String uid, String role) {
         this.email = email;
         this.name = name;
         this.deviceToken = deviceToken;
         this.photoURL = photoURL;
         this.uid = uid;
+        this.setRole(role);
     }
 
     public UserDTO() {
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getEmail() {
@@ -55,6 +60,10 @@ public class UserDTO implements DtoInterface<UserDTO> {
         this.photoURL = photoURL;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -66,20 +75,21 @@ public class UserDTO implements DtoInterface<UserDTO> {
     @Override
     public Map<String, Object> toJson() {
         return Map.of("email", this.email, "name", this.name.toJson(), "deviceToken", this.deviceToken, "photoURL",
-                this.photoURL, "uid", this.uid);
+                this.photoURL, "uid", this.uid, "role", this.role);
     }
 
     @SuppressWarnings("unchecked")
     public static UserDTO fromJson(Map<String, Object> json) {
         return new UserDTO((String) json.get("email"),
                 (NameDTO) NameDTO.fromJson((Map<String, Object>) json.get("name")), (String) json.get("deviceToken"),
-                (String) json.get("photoURL"), (String) json.get("uid"));
+                (String) json.get("photoURL"), (String) json.get("uid"), (String) json.get("role"));
     }
 
     @Override
     public String toString() {
         return "UserDTO [deviceToken=" + deviceToken + ", email=" + email + ", name.firstNamme=" + name.getFirstName()
-                + ", name.surname=" + name.getSurname() + ", photoURL=" + photoURL + ", uid=" + uid + "]";
+                + ", name.surname=" + name.getSurname() + ", photoURL=" + photoURL + ", uid=" + uid + ", role=" + role
+                + "]";
     }
 
 }

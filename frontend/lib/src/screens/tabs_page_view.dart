@@ -89,20 +89,20 @@ class _TabsPageViewState extends State<TabsPageView>
           key: bottomBarKey,
           buttonBackgroundColor: Colors.white,
           backgroundColor: Colors.white,
-          color: Colors.blueGrey[500],
+          color: Color(0xFFC75414),
           items: <Icon>[
             Icon(
+              Icons.menu_book,
+              size: 30,
+              color: Colors.white,
+            ),
+            Icon(
+              Icons.menu_book,
+              size: 30,
+              color: Colors.white,
+            ),
+            Icon(
               Icons.account_box,
-              size: 30,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.directions_car,
-              size: 30,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.list,
               size: 30,
               color: Colors.white,
             ),

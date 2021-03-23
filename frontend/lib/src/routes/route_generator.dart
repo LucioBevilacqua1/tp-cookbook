@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/src/screens/auth/register_user/register_user_view.dart';
 import 'package:frontend/src/screens/loading_screen.dart';
 import 'package:frontend/src/screens/main/home/home_view.dart';
+import 'package:frontend/src/screens/main/preview_order/preview_order_view.dart';
 import 'package:frontend/src/screens/tabs_page_model.dart';
 import 'package:frontend/src/screens/tabs_page_view.dart';
 
@@ -20,6 +22,19 @@ class RouteGenerator {
         return MaterialPageRoute(
             settings: RouteSettings(name: '/home'),
             builder: (_) => TabsPageView());
+        break;
+      case '/previewOrderView':
+        if (args is List) {
+          return MaterialPageRoute(
+              settings: RouteSettings(name: '/previewOrderView'),
+              builder: (_) => PreviewOrderView(orderItems: args[0]));
+        }
+        return _errorRoute();
+        break;
+      case '/registerUserView':
+        return MaterialPageRoute(
+            settings: RouteSettings(name: '/registerUserView'),
+            builder: (_) => RegisterUserView());
         break;
       case '/adminUtilities':
         return MaterialPageRoute(

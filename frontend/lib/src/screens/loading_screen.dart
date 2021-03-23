@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/src/config/configs.dart';
-import 'package:frontend/src/env/app_config.dart';
-//import 'package:frontend/src/widgets/dialog/loading_dialog.dart';
 
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:frontend/src/services/users_service.dart';
@@ -28,7 +25,6 @@ class LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
-    Configs.ggKEY2 = AppConfig.of(context).apiKey;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -52,7 +48,10 @@ class LoadingPageState extends State<LoadingPage> {
             child: Visibility(
               visible: isLoading,
               child: SizedBox(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.orange,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.orange[800]),
+                ),
               ),
             ),
           )

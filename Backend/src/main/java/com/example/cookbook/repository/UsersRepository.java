@@ -1,5 +1,6 @@
 package com.example.cookbook.repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 import com.example.cookbook.dto.UserDTO;
@@ -8,6 +9,8 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 
 import org.springframework.stereotype.Repository;
@@ -24,12 +27,20 @@ public class UsersRepository implements RepositoryInterface<UserDTO> {
     }
 
     @Override
+    public Collection<UserDTO> getAll() throws InterruptedException, ExecutionException {
+        Firestore db = FirestoreClient.getFirestore();
+        Collection<UserDTO> allUserList = new ArrayList<>();
+        ApiFuture<QuerySnapshot> future = db.collection("usersCollection").get();
+        QuerySnapshot documentsQuerySnapshot = future.get();
+        for (QueryDocumentSnapshot queryDocumentSnapshot : documentsQuerySnapshot.getDocuments()) {
+            allUserList.add(UserDTO.fromJson(queryDocumentSnapshot.getData()));
+        }
+        return allUserList;
+    }
+
+    @Override
     public UserDTO create(UserDTO userDTO) throws InterruptedException, ExecutionException {
-        FirestoreClient
-            .getFirestore()
-            .collection("usersCollection")
-            .document(userDTO.getUid())
-            .set(userDTO.toJson());
+        FirestoreClient.getFirestore().collection("usersCollection").document(userDTO.getUid()).set(userDTO.toJson());
         return userDTO;
     }
 
@@ -41,10 +52,4 @@ public class UsersRepository implements RepositoryInterface<UserDTO> {
     public void delete(String uid) {
 
     }
-
-    @Override
-    public Collection<UserDTO> getAll() {
-        return null;
-    }
-
 }

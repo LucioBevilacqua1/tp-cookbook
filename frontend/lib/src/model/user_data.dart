@@ -24,6 +24,10 @@ class UserData {
     this.deviceToken,
   });
 
+  bool isAdmin() {
+    return role == ADMIN;
+  }
+
   UserData.fromJson(Map<String, dynamic> item) {
     this.name = Name.fromJson(item["name"]);
     this.email = item["email"];

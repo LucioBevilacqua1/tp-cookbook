@@ -8,7 +8,7 @@ public interface RepositoryInterface<T> {
 
     public abstract T update(String uid, T t) throws InterruptedException, ExecutionException;
 
-    public abstract void delete(String uid);
+    public abstract void delete(String uid) throws InterruptedException, ExecutionException;
 
     public abstract T get(String uid) throws InterruptedException, ExecutionException;
 

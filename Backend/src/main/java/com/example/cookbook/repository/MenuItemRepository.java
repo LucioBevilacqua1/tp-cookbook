@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import com.example.cookbook.dto.MenuItemDTO;
 import com.example.cookbook.interfaces.RepositoryInterface;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -19,19 +20,22 @@ public class MenuItemRepository implements RepositoryInterface<MenuItemDTO> {
 
     @Override
     public MenuItemDTO create(MenuItemDTO menuItemDTO) throws InterruptedException, ExecutionException {
-        FirestoreClient.getFirestore().collection("menuItemCollection").document().set(menuItemDTO.toJson());
+        DocumentReference menuItemCreated = FirestoreClient.getFirestore().collection("menuItemCollection")
+                .add(menuItemDTO.toJson()).get();
+        menuItemDTO.setId(menuItemCreated.getId());
         return menuItemDTO;
     }
 
     @Override
-    public MenuItemDTO update(String uid, MenuItemDTO t) {
-        return t;
+    public MenuItemDTO update(String id, MenuItemDTO menuItemDTO)  throws InterruptedException, ExecutionException{
+        FirestoreClient.getFirestore().collection("menuItemCollection").document(id).update(menuItemDTO.toJson()).get();
+        return menuItemDTO;
 
     }
 
     @Override
-    public void delete(String uid) {
-
+    public void delete(String id) throws InterruptedException, ExecutionException {
+        FirestoreClient.getFirestore().collection("menuItemCollection").document(id).delete().get();
     }
 
     @Override
@@ -46,7 +50,7 @@ public class MenuItemRepository implements RepositoryInterface<MenuItemDTO> {
         ApiFuture<QuerySnapshot> future = db.collection("menuItemCollection").get();
         QuerySnapshot documentsQuerySnapshot = future.get();
         for (QueryDocumentSnapshot queryDocumentSnapshot : documentsQuerySnapshot.getDocuments()) {
-            allMenuItemsList.add(MenuItemDTO.fromJson(queryDocumentSnapshot.getData()));
+            allMenuItemsList.add(MenuItemDTO.fromJson(queryDocumentSnapshot.getData(), queryDocumentSnapshot.getId()));
         }
         return allMenuItemsList;
     }

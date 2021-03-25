@@ -27,7 +27,7 @@ class TabsPageModel extends BaseModel {
       // When you tap on a tab the page is added to the list of pages and loaded automatically
       switch (index) {
         case 1:
-          pages[index] = HomeView();
+          pages[index] = Container();
           break;
         case 2:
           pages[index] = RegisterUserView();

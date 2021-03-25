@@ -15,7 +15,10 @@ class HomeModel extends BaseModel {
   TextEditingController nameTextController = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
   TextEditingController priceTextController = TextEditingController();
-  bool createMode = false;
+  bool createMode = true;
+  bool editMode = false;
+  bool openForm = false;
+  MenuItem menuItemToEdit;
 
   ViewState viewState = ViewState.Busy;
   onModelReady(BuildContext context) async {
@@ -25,8 +28,29 @@ class HomeModel extends BaseModel {
     notifyListeners();
   }
 
+  switchOpenForm() {
+    openForm = !openForm;
+    notifyListeners();
+  }
+
   void switchCreateMode() {
-    createMode = !createMode;
+    descriptionTextController.clear();
+    nameTextController.clear();
+    priceTextController.clear();
+    editMode = false;
+    createMode = true;
+    menuItemToEdit = null;
+    notifyListeners();
+  }
+
+  void switchEditMode({MenuItem menuItem}) {
+    editMode = true;
+    createMode = false;
+    openForm = true;
+    nameTextController.text = menuItem.name;
+    descriptionTextController.text = menuItem.description;
+    priceTextController.text = menuItem.price.toString();
+    menuItemToEdit = menuItem;
     notifyListeners();
   }
 
@@ -34,7 +58,7 @@ class HomeModel extends BaseModel {
     if (validateForm()) {
       viewState = ViewState.Busy;
       notifyListeners();
-      MenuItem createdUser = await menuItemService.createMenuItem(
+      MenuItem createdMenuItem = await menuItemService.createMenuItem(
           description: descriptionTextController.text,
           name: nameTextController.text,
           price: double.tryParse(priceTextController.text),
@@ -45,16 +69,65 @@ class HomeModel extends BaseModel {
       nameTextController.clear();
       priceTextController.clear();
 
-      allMenuItems.add(createdUser);
+      allMenuItems.add(createdMenuItem);
       createMode = false;
+      openForm = false;
       viewState = ViewState.Idle;
       notifyListeners();
-      Toast.show("Usuario creado con éxito", context,
+      Toast.show("Item creado con éxito", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     } else {
       Toast.show("Datos inválidos", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     }
+  }
+
+  Future editMenuItem(BuildContext context) async {
+    if (validateForm()) {
+      viewState = ViewState.Busy;
+      notifyListeners();
+      menuItemToEdit.description = descriptionTextController.text;
+      menuItemToEdit.name = nameTextController.text;
+      menuItemToEdit.price = double.tryParse(priceTextController.text);
+
+      await menuItemService.editMenuItem(
+        id: menuItemToEdit.id,
+        description: descriptionTextController.text,
+        name: nameTextController.text,
+        price: double.tryParse(priceTextController.text),
+      );
+
+      descriptionTextController.clear();
+      nameTextController.clear();
+      priceTextController.clear();
+      createMode = true;
+      editMode = false;
+      openForm = false;
+
+      allMenuItems[allMenuItems.lastIndexWhere(
+          (element) => element.id == menuItemToEdit.id)] = menuItemToEdit;
+
+      viewState = ViewState.Idle;
+      notifyListeners();
+      Toast.show("Item editado con éxito", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+    } else {
+      Toast.show("Datos inválidos", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+    }
+  }
+
+  Future deleteMenuItem({MenuItem menuItem}) async {
+    viewState = ViewState.Busy;
+    notifyListeners();
+
+    await menuItemService.deleteMenuItem(
+      id: menuItem.id,
+    );
+    allMenuItems.removeWhere((element) => element.id == menuItem.id);
+
+    viewState = ViewState.Idle;
+    notifyListeners();
   }
 
   bool validateForm() {

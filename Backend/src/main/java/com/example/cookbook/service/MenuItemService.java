@@ -22,14 +22,14 @@ public class MenuItemService implements RepositoryInterface<MenuItemDTO> {
     }
 
     @Override
-    public MenuItemDTO update(String uid, MenuItemDTO t) {
-        return t;
+    public MenuItemDTO update(String id, MenuItemDTO menuItemDTO) throws InterruptedException, ExecutionException {
+        return menuItemRepository.update(id, menuItemDTO);
 
     }
 
     @Override
-    public void delete(String uid) {
-
+    public void delete(String id) throws InterruptedException, ExecutionException {
+        menuItemRepository.delete(id);
     }
 
     @Override

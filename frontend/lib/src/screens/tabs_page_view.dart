@@ -36,7 +36,6 @@ class _TabsPageViewState extends State<TabsPageView>
     if (message != null) {
       Map<String, String> data = Map<String, String>.from(message.data);
       log.info('on launch ' + data.toString());
-      log.info('on launch $message');
       switch (data['route']) {
         default:
       }
@@ -46,19 +45,9 @@ class _TabsPageViewState extends State<TabsPageView>
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       //IOS doesn't have the ['data'] field it's all in the message
       Map<String, String> data = Map<String, String>.from(message.data);
-      log.info('on message ' + data.toString());
-      log.info("DATA: " + data.toString());
       switch (data['route']) {
-        case 'driverTripDetail':
-          showToastNotification(data);
-          break;
-        case 'tripperTripDetail':
-          showToastNotification(data);
-          break;
-        case 'driverRegistered':
-          showToastNotification(data);
-          break;
         default:
+          showToastNotification(data);
       }
     });
 
@@ -92,17 +81,17 @@ class _TabsPageViewState extends State<TabsPageView>
           color: Color(0xFFC75414),
           items: <Icon>[
             Icon(
-              Icons.menu_book,
+              Icons.menu_book_outlined,
               size: 30,
               color: Colors.white,
             ),
             Icon(
-              Icons.menu_book,
+              Icons.notifications_outlined,
               size: 30,
               color: Colors.white,
             ),
             Icon(
-              Icons.account_box,
+              Icons.account_box_outlined,
               size: 30,
               color: Colors.white,
             ),

@@ -5,6 +5,7 @@ import 'package:frontend/src/core/view_state.dart';
 import 'package:frontend/src/model/menu_item.dart';
 import 'package:frontend/src/model/user_data.dart';
 import 'package:frontend/src/screens/main/home/home_model.dart';
+import 'package:toast/toast.dart';
 
 class HomeView extends StatefulWidget {
   HomeView();
@@ -18,12 +19,15 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldHomeViewKey =
+        GlobalKey<ScaffoldState>();
     double _width = MediaQuery.of(context).size.width;
     return BaseView<HomeModel>(
       onModelReady: (model) => model.onModelReady(context),
       builder: (context, model, child) => Scaffold(
-        body: Container(
-          child: ListView(
+        key: _scaffoldHomeViewKey,
+        body: SafeArea(
+          child: Column(
             children: <Widget>[
               Visibility(
                 visible: Configs.currentUser.role == UserData.ADMIN,
@@ -33,7 +37,7 @@ class HomeViewState extends State<HomeView> {
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        model.switchCreateMode();
+                        model.switchOpenForm();
                       });
                     },
                     child: Container(
@@ -74,12 +78,47 @@ class HomeViewState extends State<HomeView> {
                 ),
               ),
               Visibility(
-                visible: model.createMode,
+                visible: model.openForm,
                 child: Container(
                   width: _width,
-                  padding: EdgeInsets.only(top: 50),
+                  padding: EdgeInsets.only(top: 10),
                   child: Column(
                     children: <Widget>[
+                      Visibility(
+                        visible: !model.createMode,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: InkWell(
+                            onTap: model.viewState == ViewState.Idle
+                                ? () async {
+                                    model.switchCreateMode();
+                                  }
+                                : null,
+                            child: Container(
+                              height: 45,
+                              width: _width * .3,
+                              decoration: BoxDecoration(
+                                  color: model.editMode
+                                      ? Colors.teal
+                                      : Colors.green[800],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50))),
+                              child: Center(
+                                child: model.viewState == ViewState.Idle
+                                    ? Text(
+                                        'Modo crear',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Container(
                         width: _width / 1.2,
                         height: 45,
@@ -93,6 +132,7 @@ class HomeViewState extends State<HomeView> {
                             ]),
                         child: TextField(
                           controller: model.nameTextController,
+                          textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Nombre',
@@ -115,6 +155,7 @@ class HomeViewState extends State<HomeView> {
                             ]),
                         child: TextField(
                           controller: model.descriptionTextController,
+                          textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Descripción',
@@ -137,6 +178,7 @@ class HomeViewState extends State<HomeView> {
                             ]),
                         child: TextField(
                           controller: model.priceTextController,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Precio',
@@ -149,20 +191,27 @@ class HomeViewState extends State<HomeView> {
                       InkWell(
                         onTap: model.viewState == ViewState.Idle
                             ? () async {
-                                await model.createMenuItem(context);
+                                if (model.createMode) {
+                                  await model.createMenuItem(context);
+                                }
+                                if (model.editMode) {
+                                  await model.editMenuItem(context);
+                                }
                               }
                             : null,
                         child: Container(
                           height: 45,
                           width: _width / 1.2,
                           decoration: BoxDecoration(
-                              color: Colors.green[800],
+                              color: model.editMode
+                                  ? Colors.teal
+                                  : Colors.green[800],
                               borderRadius:
                                   BorderRadius.all(Radius.circular(50))),
                           child: Center(
                             child: model.viewState == ViewState.Idle
                                 ? Text(
-                                    'Crear'.toUpperCase(),
+                                    model.editMode ? 'EDITAR' : 'CREAR',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
@@ -267,35 +316,133 @@ class HomeViewState extends State<HomeView> {
                   ],
                 ),
               ),
-              ListView.builder(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  itemCount: model.allMenuItems.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    MenuItem menuItem = model.allMenuItems[index];
-                    return Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              model.orderItems.add(menuItem);
-                            });
-                          },
-                          child: Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text(menuItem.name),
-                                  Text("Descripción: " + menuItem.description),
-                                  Text("Precio: " +
-                                      menuItem.price.toStringAsFixed(1))
-                                ],
+              Visibility(
+                visible: model.viewState == ViewState.Idle,
+                child: Expanded(
+                  child: ListView.builder(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      itemCount: model.allMenuItems.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        MenuItem menuItem = model.allMenuItems[index];
+                        return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            child: Card(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 8, 10),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                model.orderItems.add(menuItem);
+                                                Toast.show("Agregado al pedido",
+                                                    context,
+                                                    duration:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity: Toast.TOP);
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20,
+                                                  right: 20,
+                                                  top: 20,
+                                                  bottom: 20),
+                                              child: Text(
+                                                "AGREGAR\nA PEDIDO",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.teal,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  menuItem.name,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  "Descripción: " +
+                                                      menuItem.description,
+                                                  maxLines: 2,
+                                                ),
+                                                Divider(
+                                                  height: 10,
+                                                  color: Colors.transparent,
+                                                ),
+                                                Text("Precio: " +
+                                                    menuItem.price
+                                                        .toStringAsFixed(1)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        Visibility(
+                                          visible:
+                                              Configs.currentUser.isAdmin(),
+                                          child: InkWell(
+                                            onTap: () {
+                                              model.switchEditMode(
+                                                  menuItem: menuItem);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5),
+                                              child: Icon(
+                                                Icons.edit,
+                                                color: Colors.teal,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible:
+                                              Configs.currentUser.isAdmin(),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await model.deleteMenuItem(
+                                                  menuItem: menuItem);
+                                              Toast.show(
+                                                  "Comida eliminada con éxito",
+                                                  _scaffoldHomeViewKey
+                                                      .currentContext,
+                                                  duration: Toast.LENGTH_LONG,
+                                                  gravity: Toast.TOP);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.red[800],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ),
-                        ));
-                  })
+                            ));
+                      }),
+                ),
+              )
             ],
           ),
         ),

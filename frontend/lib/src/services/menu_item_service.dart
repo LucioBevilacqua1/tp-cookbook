@@ -55,4 +55,39 @@ class MenuItemService {
       throw Exception(jsonDecode(response.body)["msg"]);
     }
   }
+
+  //------------------------------
+  /// Edits a Food or Drink by id
+  //------------------------------
+  Future editMenuItem(
+      {String id, String description, String name, double price}) async {
+    String editMenuItemUrl = menuItemApiUrl + "editMenuItem/" + id + ".json";
+    var body = {
+      "description": description,
+      "name": name,
+      "price": price,
+    };
+    var response = await http.put(editMenuItemUrl,
+        body: jsonEncode(body), headers: Configs.headers);
+
+    if (!jsonDecode(response.body)["success"]) {
+      log.severe('Error base de datos: ' + response.body.toString());
+      throw Exception(jsonDecode(response.body)["msg"]);
+    }
+  }
+
+  //------------------------------
+  /// Deletes a Food or Drink by id
+  //------------------------------
+  Future deleteMenuItem({String id}) async {
+    String deleteMenuItemUrl =
+        menuItemApiUrl + "deleteMenuItem/" + id + ".json";
+
+    var response =
+        await http.delete(deleteMenuItemUrl, headers: Configs.headers);
+    if (!jsonDecode(response.body)["success"]) {
+      log.severe('Error base de datos: ' + response.body.toString());
+      throw Exception(jsonDecode(response.body)["msg"]);
+    }
+  }
 }

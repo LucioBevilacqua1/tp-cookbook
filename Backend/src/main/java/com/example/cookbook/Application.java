@@ -21,7 +21,8 @@ public class Application {
 
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-					.setDatabaseUrl("https://cookbook-dev1.firebaseio.com").build();
+					.setDatabaseUrl("https://cookbook-dev1.firebaseio.com")
+					.build();
 
 			FirebaseApp.initializeApp(options);
 		} catch (FileNotFoundException e) {

@@ -5,15 +5,16 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
+import com.example.cookbook.dto.SigninDTO;
 import com.example.cookbook.dto.SignupDTO;
 import com.example.cookbook.dto.UserDTO;
 import com.example.cookbook.interfaces.ServiceInterface;
 import com.example.cookbook.repository.UsersRepository;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class AuthService implements ServiceInterface<SignupDTO> {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    private FirebaseAuth auth;
 
     public UserDTO signup(SignupDTO signupDTO) throws InterruptedException, ExecutionException, FirebaseAuthException {
         // initialize a Random object somewhere; you should only need one
@@ -47,6 +50,17 @@ public class AuthService implements ServiceInterface<SignupDTO> {
         return createdUserDTO;
     }
 
+    public String signin(SigninDTO signinDTO) throws InterruptedException, ExecutionException, FirebaseAuthException {
+
+        this.auth = FirebaseAuth.getInstance();
+
+        ActionCodeSettings settings = ActionCodeSettings.builder().setAndroidPackageName("com.example.Cookbook.dev")
+                .build();
+        String result = this.auth.generateSignInWithEmailLink(signinDTO.getEmail(), settings);
+
+        return result;
+    }
+
     @Override
     public void create(SignupDTO product) {
 
@@ -55,7 +69,7 @@ public class AuthService implements ServiceInterface<SignupDTO> {
     @Override
     public SignupDTO update(String uid, SignupDTO product) {
         return product;
-        
+
     }
 
     @Override

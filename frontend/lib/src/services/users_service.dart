@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
@@ -39,52 +38,6 @@ class UsersService {
     }
   }
 
-  // -----------------------------------------------------
-  /// Last step before the user can access to `/home`
-  ///
-  /// 1. Gets notification permission
-  /// 2. Gets GPS and location permission
-  /// 3. Signs in the user and updates user data on the db
-  // -----------------------------------------------------
-  Future<void> setCurrentUser([Function(String) changeProgressMessage]) async {
-    String deviceToken;
-    bool progressMessageActive = changeProgressMessage != null;
-    log.info("Entra a setCurrentUser");
-
-    /// 1. Asks for notification permission
-    try {
-      if (Platform.isIOS) {
-        NotificationSettings result =
-            await _firebaseMessaging.requestPermission();
-        Configs.notificationPermissionStatus = result.authorizationStatus;
-      } else if (Platform.isAndroid) {
-        Configs.notificationPermissionStatus = AuthorizationStatus.authorized;
-      }
-      deviceToken = await _firebaseMessaging.getToken();
-    } catch (e) {
-      log.severe("No se habilitó el permiso de notificacion");
-      Configs.notificationPermissionStatus = AuthorizationStatus.denied;
-    }
-
-    /// 3. Signs in the user and updates user data on the db
-    //user = _auth.currentUser;
-
-    ///the next  lines are the biggest mistery in history programming, but works, so dont touch it
-    ///if you dont reload 2 times firebase doesnt recognize the email verification, I repeat: IT WORKS, SO DONT TOUCH IT
-    //await user.reload();
-    /*if (!user.emailVerified) {
-      user = _auth.currentUser;
-      user.reload();
-    }*/
-
-    UserData currentUser = await getCurrentUserAndUpdateUserData(
-        "ZY7J6dSoKsUoI2TTCdIbl7MGh0n1", deviceToken);
-    if (progressMessageActive) {
-      changeProgressMessage("Disfrutá el viaje");
-    }
-    Configs.setCurrentUser(currentUser);
-  }
-
   //------------------------------
   /// Gets current user
   ///
@@ -92,18 +45,21 @@ class UsersService {
   ///
   /// `@returns` current user
   //------------------------------
-  Future<UserData> getCurrentUserAndUpdateUserData(
-      String uid, deviceToken) async {
+  Future<UserData> getCurrentUserAndUpdateData(String uid) async {
+    String deviceToken = await _firebaseMessaging.getToken();
     String url =
         usersApiUrl + "getCurrentUserAndUpdateUserData/" + uid + ".json";
+
     var body = {"deviceToken": deviceToken};
-    log.info("Url para getCurrentUserAndUpdateUserData: " + url);
 
     var response =
         await http.put(url, body: jsonEncode(body), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
-      log.info("Referral id agregado con éxito");
-      return UserData.fromJson(jsonDecode(response.body)["data"]["user"]);
+      UserData currentUser =
+          UserData.fromJson(jsonDecode(response.body)["data"]["user"]);
+
+      Configs.setCurrentUser(currentUser);
+      return currentUser;
     } else {
       log.severe('Error base de datos: ' + response.body.toString());
       throw Exception(jsonDecode(response.body)["msg"]);

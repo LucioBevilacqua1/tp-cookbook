@@ -10,6 +10,7 @@ class UserData {
   Name name;
   String role;
   String photoURL;
+  DateTime lastSeen;
 
   static const String ADMIN = "admin";
 
@@ -19,6 +20,7 @@ class UserData {
     @required this.uid,
     @required this.photoURL,
     @required this.role,
+    @required this.lastSeen,
     this.deviceToken,
   });
 
@@ -29,6 +31,7 @@ class UserData {
     this.photoURL = item["photoURL"];
     this.role = item["role"] ?? "indefinido";
     this.deviceToken = item["deviceToken"];
+    this.lastSeen = DateTime.tryParse(item["lastSeen"]);
   }
 
   UserData.fromDocumentSnapshot(DocumentSnapshot item) {
@@ -38,6 +41,7 @@ class UserData {
     this.photoURL = item.data()["photoURL"];
     this.role = item.data()["role"] ?? "indefinido";
     this.deviceToken = item.data()["deviceToken"];
+    this.lastSeen = DateTime.tryParse(item.data()["lastSeen"]);
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -47,5 +51,6 @@ class UserData {
         'photoURL': this.photoURL,
         'role': this.role ?? "indefinido",
         'deviceToken': this.deviceToken,
+        'lastSeen': this.lastSeen,
       };
 }

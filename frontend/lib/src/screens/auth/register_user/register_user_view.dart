@@ -3,6 +3,7 @@ import 'package:frontend/src/config/configs.dart';
 import 'package:frontend/src/core/base_view.dart';
 import 'package:frontend/src/core/view_state.dart';
 import 'package:frontend/src/model/user_data.dart';
+import 'package:intl/intl.dart';
 
 import 'register_user_model.dart';
 
@@ -99,6 +100,7 @@ class _RegisterUserViewState extends State<RegisterUserView>
                               ]),
                           child: TextField(
                             controller: model.nameTextController,
+                            textCapitalization: TextCapitalization.words,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Nombre y apellido',
@@ -271,7 +273,10 @@ class _RegisterUserViewState extends State<RegisterUserView>
                                       " " +
                                       user.name.surname),
                                   Text("Email: " + user.email),
-                                  Text("Rol: " + user.role)
+                                  Text("Rol: " + user.role),
+                                  Text("Última conexión: " +
+                                      DateFormat('EEE, dd/MM/y HH:mm', 'es_ES')
+                                          .format(user.lastSeen.toLocal()))
                                 ],
                               ),
                             ),

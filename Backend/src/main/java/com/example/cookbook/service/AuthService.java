@@ -1,6 +1,8 @@
 package com.example.cookbook.service;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import com.example.cookbook.dto.SignupDTO;
@@ -22,21 +24,23 @@ public class AuthService implements ServiceInterface<SignupDTO> {
     private UsersRepository usersRepository;
 
     public UserDTO signup(SignupDTO signupDTO) throws InterruptedException, ExecutionException, FirebaseAuthException {
+        // initialize a Random object somewhere; you should only need one
+        Random random = new Random();
 
+        // generate a random integer from 0 to 899, then add 100
+        int x = random.nextInt(900) + 100;
         FirebaseAuth auth = FirebaseAuth.getInstance();
-
         // Creates the user in Firebase authentication service.
-        CreateRequest request = new CreateRequest()
-        .setEmail(signupDTO.getEmail())
-        .setEmailVerified(false)
-        .setPassword(signupDTO.getPassword()).setPhoneNumber("+543416620882")
-        .setDisplayName(signupDTO.getName().toString())
-        .setPhotoUrl("https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png")
-        .setDisabled(false);
+        CreateRequest request = new CreateRequest().setEmail(signupDTO.getEmail()).setEmailVerified(false)
+                .setPassword(signupDTO.getPassword()).setPhoneNumber("+543416620" + x)
+                .setDisplayName(signupDTO.getName().toString())
+                .setPhotoUrl(
+                        "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png")
+                .setDisabled(false);
         UserRecord userRecord = auth.createUser(request);
 
         UserDTO userDTO = new UserDTO(signupDTO.getEmail(), signupDTO.getName(), "", userRecord.getPhotoUrl(),
-                userRecord.getUid(), signupDTO.getRole());
+                userRecord.getUid(), signupDTO.getRole(), new Date());
 
         // Creates the user in Firestore database
         UserDTO createdUserDTO = usersRepository.create(userDTO);
@@ -49,8 +53,9 @@ public class AuthService implements ServiceInterface<SignupDTO> {
     }
 
     @Override
-    public void update(String uid, SignupDTO product) {
-
+    public SignupDTO update(String uid, SignupDTO product) {
+        return product;
+        
     }
 
     @Override

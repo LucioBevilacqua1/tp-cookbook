@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/src/screens/auth/login_user/login_user_view.dart';
 import 'package:frontend/src/screens/auth/register_user/register_user_view.dart';
 import 'package:frontend/src/screens/loading_screen.dart';
 import 'package:frontend/src/screens/main/home/home_view.dart';
@@ -18,11 +19,19 @@ class RouteGenerator {
         return MaterialPageRoute(
             settings: RouteSettings(name: '/'), builder: (_) => LoadingPage());
         break;
+
       case '/home':
         return MaterialPageRoute(
             settings: RouteSettings(name: '/home'),
             builder: (_) => TabsPageView());
         break;
+
+      case '/auth':
+        return MaterialPageRoute(
+            settings: RouteSettings(name: '/auth'),
+            builder: (_) => LoginUserView());
+        break;
+
       case '/previewOrderView':
         if (args is List) {
           return MaterialPageRoute(
@@ -31,19 +40,20 @@ class RouteGenerator {
         }
         return _errorRoute();
         break;
+
       case '/registerUserView':
         return MaterialPageRoute(
             settings: RouteSettings(name: '/registerUserView'),
             builder: (_) => RegisterUserView());
         break;
+
       case '/adminUtilities':
         return MaterialPageRoute(
             settings: RouteSettings(name: '/adminUtilities'),
             builder: (_) => HomeView());
         break;
+
       default:
-        // Por alguna razon cuando entro de una push con la app matada entra al router manda una ruta json y no entra a ningun lado
-        // FIX temporal es que por default redireccione a la ruta '/' si el name no tiene una '/' y tabs no esta inicializado
         TabsPageModel tabsPageModel = locator<TabsPageModel>();
         bool isInitialized = tabsPageModel.bottomBar != null;
         if (!settings.name.contains('/') && !isInitialized) {

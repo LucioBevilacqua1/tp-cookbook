@@ -47,8 +47,9 @@ public class UsersController {
 		Map<String, Object> data = new HashMap<>();
 		try {
 			UserDTO userDTO = usersService.get(uid);
-			System.out.println("userDTO: " + userDTO.toString());
-			data.put("user", userDTO);
+			UserDTO updatedUser = usersService.update(uid, userDTO);
+			System.out.println("updatedUser: " + updatedUser.toString());
+			data.put("user", updatedUser);
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}

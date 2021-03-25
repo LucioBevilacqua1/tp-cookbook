@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:frontend/src/services/auth_service.dart';
 import 'package:frontend/src/services/users_service.dart';
 import 'package:logging/logging.dart';
 
@@ -13,7 +15,7 @@ class LoadingPage extends StatefulWidget {
 
 class LoadingPageState extends State<LoadingPage> {
   //LoadingDialog loading = LoadingDialog();
-  //AuthService appAuth;
+  AuthService appAuth;
   bool isLoading = false;
   bool _isLogged = false;
   final Logger log = Logger('LoadingPageState');
@@ -67,16 +69,18 @@ class LoadingPageState extends State<LoadingPage> {
   }
 
   Future<void> _redirectToDefaultPage() async {
-    //appAuth = new AuthService(context: context);
+    appAuth = AuthService(context: context);
     UsersService usersService = UsersService(context: context);
     String _defaultHome = '/auth';
     // Get result of the login function.
-    //_isLogged = await appAuth.isLogged();
-    _isLogged = true;
+    _isLogged = await appAuth.isLogged();
 
     if (_isLogged) {
-      await usersService.setCurrentUser();
+      await usersService
+          .getCurrentUserAndUpdateData(FirebaseAuth.instance.currentUser.uid);
       _defaultHome = '/home';
+    } else {
+      _defaultHome = '/auth';
     }
     await Navigator.of(context).pushReplacementNamed(_defaultHome);
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/src/config/configs.dart';
 import 'package:frontend/src/model/user_data.dart';
@@ -12,6 +13,36 @@ class AuthService {
   static String authApiUrl;
   AuthService({@required BuildContext context}) {
     authApiUrl = AppConfig.of(context).baseUrl + "auth/";
+  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // -----------------------------------------------------
+  /// Checks if there's a user logged in
+  ///
+  /// 1. Gets the [currentUser]
+  /// 2. If [user], [user.email] and [user.phoneNumber] are not __null__ returns __true__, else returns __false__
+  // -----------------------------------------------------
+  Future<bool> isLogged() async {
+    User loggedUser = _auth.currentUser;
+    //user, mail and phone number != null
+    bool isLogged = (loggedUser != null &&
+        loggedUser.phoneNumber != null &&
+        loggedUser.phoneNumber.isNotEmpty &&
+        loggedUser.email != null &&
+        loggedUser.email.isNotEmpty);
+    return isLogged;
+  }
+
+  //------------------------------
+  /// Logs in a registered user
+  //------------------------------
+  Future<UserCredential> loginUser({String email, String password}) async {
+    try {
+      return await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   //------------------------------

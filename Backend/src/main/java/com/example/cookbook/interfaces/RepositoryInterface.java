@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 public interface RepositoryInterface<T> {
     public abstract T create(T t) throws InterruptedException, ExecutionException;
 
-    public abstract void update(String uid, T t);
+    public abstract T update(String uid, T t) throws InterruptedException, ExecutionException;
 
     public abstract void delete(String uid);
 

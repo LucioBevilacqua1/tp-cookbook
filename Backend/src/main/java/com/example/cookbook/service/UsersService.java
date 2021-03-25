@@ -20,8 +20,9 @@ public class UsersService implements ServiceInterface<UserDTO> {
     }
 
     @Override
-    public void update(String uid, UserDTO product) {
-
+    public UserDTO update(String uid, UserDTO userDTO) throws InterruptedException, ExecutionException {
+        UserDTO updatedUser = usersRepository.update(uid, userDTO);
+        return updatedUser;
     }
 
     @Override

@@ -37,7 +37,7 @@ class RegisterUserModel extends BaseModel {
           email: emailTextController.text,
           name: nameTextController.text,
           password: passwordTextController.text,
-          role: roleTextController.text);
+          role: roleTextController.text.toLowerCase());
 
       emailTextController.clear();
       nameTextController.clear();
@@ -48,7 +48,7 @@ class RegisterUserModel extends BaseModel {
       createMode = false;
       viewState = ViewState.Idle;
       notifyListeners();
-      Toast.show("Usuario creado con éxito", context,
+      Toast.show("Item creado con éxito", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     } else {
       Toast.show("Datos inválidos", context,
@@ -64,6 +64,7 @@ class RegisterUserModel extends BaseModel {
   bool validateForm() {
     if (emailTextController.text.isNotEmpty &&
         nameTextController.text.isNotEmpty &&
+        nameTextController.text.contains(" ") &&
         passwordTextController.text.isNotEmpty &&
         roleTextController.text.isNotEmpty) {
       return true;

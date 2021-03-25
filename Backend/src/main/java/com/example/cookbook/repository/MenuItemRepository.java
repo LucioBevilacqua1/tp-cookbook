@@ -24,7 +24,8 @@ public class MenuItemRepository implements RepositoryInterface<MenuItemDTO> {
     }
 
     @Override
-    public void update(String uid, MenuItemDTO t) {
+    public MenuItemDTO update(String uid, MenuItemDTO t) {
+        return t;
 
     }
 

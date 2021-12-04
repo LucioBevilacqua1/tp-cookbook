@@ -20,25 +20,19 @@ Future<void> main() async {
     print('----${rec.level.name}: ${rec.loggerName} -> ${rec.message}');
   });
   var configuredApp = AppConfig(
-    baseUrl: "https://41f341b11903.ngrok.io/",
+    baseUrl: "https://b91a-181-93-177-189.ngrok.io/",
     appTitle: "CookBook",
     child: MyApp(
       MaterialApp(
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(
-            primaryColor: Colors.teal,
-            primarySwatch: Colors.cyan,
-            iconTheme: IconThemeData(color: Colors.white)),
+            primaryColor: Colors.teal, primarySwatch: Colors.cyan, iconTheme: IconThemeData(color: Colors.white)),
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: [
-          const Locale('es', 'AR'),
-          const Locale('pt', 'BR'),
-          const Locale('en', 'US')
-        ],
+        supportedLocales: [const Locale('es', 'AR'), const Locale('pt', 'BR'), const Locale('en', 'US')],
       ),
     ),
   );

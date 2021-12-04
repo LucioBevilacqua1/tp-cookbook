@@ -28,12 +28,11 @@ class UsersService {
   --------------------------------*/
   Future<UserData> getUserById(String uid) async {
     String getUserByUserIdUrl = usersApiUrl + uid;
-    var response = await http.get(getUserByUserIdUrl, headers: Configs.headers);
+    var response = await http.get(Uri.parse(getUserByUserIdUrl), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
       return UserData.fromJson(jsonDecode(response.body)['user']['data']);
     } else {
-      log.severe("----Detalles del error: " +
-          jsonDecode(response.body)["errors"].toString());
+      log.severe("----Detalles del error: " + jsonDecode(response.body)["errors"].toString());
       throw Exception(jsonDecode(response.body)["msg"].toString());
     }
   }
@@ -47,16 +46,13 @@ class UsersService {
   //------------------------------
   Future<UserData> getCurrentUserAndUpdateData(String uid) async {
     String deviceToken = await _firebaseMessaging.getToken();
-    String url =
-        usersApiUrl + "getCurrentUserAndUpdateUserData/" + uid + ".json";
+    String url = usersApiUrl + "getCurrentUserAndUpdateUserData/" + uid + ".json";
 
     var body = {"deviceToken": deviceToken};
 
-    var response =
-        await http.put(url, body: jsonEncode(body), headers: Configs.headers);
+    var response = await http.put(Uri.parse(url), body: jsonEncode(body), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
-      UserData currentUser =
-          UserData.fromJson(jsonDecode(response.body)["data"]["user"]);
+      UserData currentUser = UserData.fromJson(jsonDecode(response.body)["data"]["user"]);
 
       Configs.setCurrentUser(currentUser);
       return currentUser;
@@ -70,9 +66,9 @@ class UsersService {
   /// Gets all users of the database
   //------------------------------
   Future<List<UserData>> getAllUsers() async {
-    List<UserData> allUsers = List();
+    List<UserData> allUsers = [];
     String urlGetAllUsers = usersApiUrl + "getAllUsers.json";
-    var response = await http.get(urlGetAllUsers, headers: Configs.headers);
+    var response = await http.get(Uri.parse(urlGetAllUsers), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
       log.info("Referral id agregado con éxito");
       for (var user in jsonDecode(response.body)["data"]["users"]) {

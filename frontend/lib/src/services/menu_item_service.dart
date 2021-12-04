@@ -18,9 +18,9 @@ class MenuItemService {
   /// Gets all Foods and Drinks
   //------------------------------
   Future<List<MenuItem>> getAllMenuItems() async {
-    List<MenuItem> allMenuItems = List();
+    List<MenuItem> allMenuItems = [];
     String urlGetAllMenuItems = menuItemApiUrl + "getAllMenuItems.json";
-    var response = await http.get(urlGetAllMenuItems, headers: Configs.headers);
+    var response = await http.get(Uri.parse(urlGetAllMenuItems), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
       log.info("Referral id agregado con éxito");
       for (var user in jsonDecode(response.body)["data"]["menuItems"]) {
@@ -36,18 +36,11 @@ class MenuItemService {
   //------------------------------
   /// Creates a new Food or Drink
   //------------------------------
-  Future<MenuItem> createMenuItem(
-      {String description, double price, String name, String photoUrl}) async {
+  Future<MenuItem> createMenuItem({String description, double price, String name, String photoUrl}) async {
     String createMenuItemUrl = menuItemApiUrl + "createMenuItem.json";
-    var body = {
-      "description": description,
-      "name": name,
-      "price": price,
-      "photoUrl": photoUrl
-    };
+    var body = {"description": description, "name": name, "price": price, "photoUrl": photoUrl};
 
-    var response = await http.post(createMenuItemUrl,
-        body: jsonEncode(body), headers: Configs.headers);
+    var response = await http.post(Uri.parse(createMenuItemUrl), body: jsonEncode(body), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
       return MenuItem.fromJson(jsonDecode(response.body)["data"]["menuItem"]);
     } else {
@@ -59,16 +52,14 @@ class MenuItemService {
   //------------------------------
   /// Edits a Food or Drink by id
   //------------------------------
-  Future editMenuItem(
-      {String id, String description, String name, double price}) async {
+  Future editMenuItem({String id, String description, String name, double price}) async {
     String editMenuItemUrl = menuItemApiUrl + "editMenuItem/" + id + ".json";
     var body = {
       "description": description,
       "name": name,
       "price": price,
     };
-    var response = await http.put(editMenuItemUrl,
-        body: jsonEncode(body), headers: Configs.headers);
+    var response = await http.put(Uri.parse(editMenuItemUrl), body: jsonEncode(body), headers: Configs.headers);
 
     if (!jsonDecode(response.body)["success"]) {
       log.severe('Error base de datos: ' + response.body.toString());
@@ -80,11 +71,9 @@ class MenuItemService {
   /// Deletes a Food or Drink by id
   //------------------------------
   Future deleteMenuItem({String id}) async {
-    String deleteMenuItemUrl =
-        menuItemApiUrl + "deleteMenuItem/" + id + ".json";
+    String deleteMenuItemUrl = menuItemApiUrl + "deleteMenuItem/" + id + ".json";
 
-    var response =
-        await http.delete(deleteMenuItemUrl, headers: Configs.headers);
+    var response = await http.delete(Uri.parse(deleteMenuItemUrl), headers: Configs.headers);
     if (!jsonDecode(response.body)["success"]) {
       log.severe('Error base de datos: ' + response.body.toString());
       throw Exception(jsonDecode(response.body)["msg"]);

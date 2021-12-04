@@ -9,7 +9,7 @@ import 'package:toast/toast.dart';
 class RegisterUserModel extends BaseModel {
   AuthService authService;
   UsersService usersService;
-  List<UserData> allUsers = List();
+  List<UserData> allUsers = [];
   TextEditingController nameTextController = TextEditingController();
   TextEditingController roleTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
@@ -48,11 +48,9 @@ class RegisterUserModel extends BaseModel {
       createMode = false;
       viewState = ViewState.Idle;
       notifyListeners();
-      Toast.show("Item creado con éxito", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      Toast.show("Item creado con éxito", context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     } else {
-      Toast.show("Datos inválidos", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      Toast.show("Datos inválidos", context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     }
   }
 

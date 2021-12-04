@@ -38,8 +38,7 @@ class AuthService {
   //------------------------------
   Future<UserCredential> loginUser({String email, String password}) async {
     try {
-      return await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       throw Exception(e);
     }
@@ -48,8 +47,7 @@ class AuthService {
   //------------------------------
   /// Registers a new user
   //------------------------------
-  Future<UserData> signup(
-      {String email, String password, String name, String role}) async {
+  Future<UserData> signup({String email, String password, String name, String role}) async {
     String signupUrl = authApiUrl + "signup.json";
     var body = {
       "email": email,
@@ -58,8 +56,7 @@ class AuthService {
       "role": role
     };
 
-    var response = await http.post(signupUrl,
-        body: jsonEncode(body), headers: Configs.headers);
+    var response = await http.post(Uri.parse(signupUrl), body: jsonEncode(body), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {
       return UserData.fromJson(jsonDecode(response.body)["data"]["user"]);
     } else {

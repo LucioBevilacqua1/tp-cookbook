@@ -10,8 +10,8 @@ class HomeModel extends BaseModel {
   final Logger log = Logger('HomeModel');
 
   MenuItemService menuItemService;
-  List<MenuItem> allMenuItems = List();
-  List<MenuItem> orderItems = List();
+  List<MenuItem> allMenuItems = [];
+  List<MenuItem> orderItems = [];
   TextEditingController nameTextController = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
   TextEditingController priceTextController = TextEditingController();
@@ -62,8 +62,7 @@ class HomeModel extends BaseModel {
           description: descriptionTextController.text,
           name: nameTextController.text,
           price: double.tryParse(priceTextController.text),
-          photoUrl:
-              "https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png");
+          photoUrl: "https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png");
 
       descriptionTextController.clear();
       nameTextController.clear();
@@ -74,11 +73,9 @@ class HomeModel extends BaseModel {
       openForm = false;
       viewState = ViewState.Idle;
       notifyListeners();
-      Toast.show("Item creado con éxito", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      Toast.show("Item creado con éxito", context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     } else {
-      Toast.show("Datos inválidos", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      Toast.show("Datos inválidos", context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     }
   }
 
@@ -104,16 +101,13 @@ class HomeModel extends BaseModel {
       editMode = false;
       openForm = false;
 
-      allMenuItems[allMenuItems.lastIndexWhere(
-          (element) => element.id == menuItemToEdit.id)] = menuItemToEdit;
+      allMenuItems[allMenuItems.lastIndexWhere((element) => element.id == menuItemToEdit.id)] = menuItemToEdit;
 
       viewState = ViewState.Idle;
       notifyListeners();
-      Toast.show("Item editado con éxito", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      Toast.show("Item editado con éxito", context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     } else {
-      Toast.show("Datos inválidos", context,
-          duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
+      Toast.show("Datos inválidos", context, duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
     }
   }
 

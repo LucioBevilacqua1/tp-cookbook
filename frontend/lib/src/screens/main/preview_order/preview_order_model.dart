@@ -9,7 +9,7 @@ class PreviewOrderModel extends BaseModel {
   final Logger log = Logger('PreviewOrderModel');
 
   MenuItemService menuItemService;
-  List<MenuItem> allMenuItems = List();
+  List<MenuItem> allMenuItems = [];
   double totalPrice = 0.0;
 
   ViewState viewState = ViewState.Busy;

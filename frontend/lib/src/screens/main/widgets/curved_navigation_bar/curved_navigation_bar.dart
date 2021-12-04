@@ -38,8 +38,7 @@ class CurvedNavigationBar extends StatefulWidget {
   CurvedNavigationBarState createState() => CurvedNavigationBarState();
 }
 
-class CurvedNavigationBarState extends State<CurvedNavigationBar>
-    with SingleTickerProviderStateMixin {
+class CurvedNavigationBarState extends State<CurvedNavigationBar> with SingleTickerProviderStateMixin {
   double _startingPos;
   int _endingIndex = 0;
   double _pos;
@@ -73,8 +72,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
             size: widget.items[_endingIndex].size,
           );
         }
-        _buttonHide =
-            (1 - ((middle - _pos) / (_startingPos - middle)).abs()).abs();
+        _buttonHide = (1 - ((middle - _pos) / (_startingPos - middle)).abs()).abs();
       });
     });
   }
@@ -86,8 +84,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
       final newPosition = widget.index / _length;
       _startingPos = _pos;
       _endingIndex = widget.index;
-      _animationController.animateTo(newPosition,
-          duration: widget.animationDuration, curve: widget.animationCurve);
+      _animationController.animateTo(newPosition, duration: widget.animationDuration, curve: widget.animationCurve);
     }
   }
 
@@ -104,7 +101,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
       color: widget.backgroundColor,
       height: widget.height,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           Positioned(
@@ -177,8 +174,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     setState(() {
       _startingPos = _pos;
       _endingIndex = index;
-      _animationController.animateTo(newPosition,
-          duration: widget.animationDuration, curve: widget.animationCurve);
+      _animationController.animateTo(newPosition, duration: widget.animationDuration, curve: widget.animationCurve);
     });
   }
 }

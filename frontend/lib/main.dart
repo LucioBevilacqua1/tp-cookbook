@@ -20,7 +20,7 @@ Future<void> main() async {
     print('----${rec.level.name}: ${rec.loggerName} -> ${rec.message}');
   });
   var configuredApp = AppConfig(
-    baseUrl: "https://b91a-181-93-177-189.ngrok.io/",
+    baseUrl: "https://dda8-181-93-177-189.ngrok.io/",
     appTitle: "CookBook",
     child: MyApp(
       MaterialApp(

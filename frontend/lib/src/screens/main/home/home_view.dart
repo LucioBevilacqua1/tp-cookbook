@@ -19,8 +19,7 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldHomeViewKey =
-        GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> _scaffoldHomeViewKey = GlobalKey<ScaffoldState>();
     double _width = MediaQuery.of(context).size.width;
     return BaseView<HomeModel>(
       onModelReady: (model) => model.onModelReady(context),
@@ -32,8 +31,7 @@ class HomeViewState extends State<HomeView> {
               Visibility(
                 visible: Configs.currentUser.role == UserData.ADMIN,
                 child: Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
+                  padding: EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
                   child: InkWell(
                     onTap: () {
                       setState(() {
@@ -53,8 +51,7 @@ class HomeViewState extends State<HomeView> {
                           Align(
                             alignment: Alignment.center,
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 15, top: 15),
+                              padding: const EdgeInsets.only(bottom: 15, top: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -64,8 +61,7 @@ class HomeViewState extends State<HomeView> {
                                   ),
                                   Text(
                                     'Crear Comida/Bebida',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
+                                    style: TextStyle(color: Colors.white, fontSize: 18),
                                   ),
                                 ],
                               ),
@@ -98,18 +94,13 @@ class HomeViewState extends State<HomeView> {
                               height: 45,
                               width: _width * .3,
                               decoration: BoxDecoration(
-                                  color: model.editMode
-                                      ? Colors.teal
-                                      : Colors.green[800],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
+                                  color: model.editMode ? Colors.teal : Colors.green[800],
+                                  borderRadius: BorderRadius.all(Radius.circular(50))),
                               child: Center(
                                 child: model.viewState == ViewState.Idle
                                     ? Text(
                                         'Modo crear',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                       )
                                     : CircularProgressIndicator(
                                         strokeWidth: 2,
@@ -122,14 +113,11 @@ class HomeViewState extends State<HomeView> {
                       Container(
                         width: _width / 1.2,
                         height: 45,
-                        padding: EdgeInsets.only(
-                            top: 4, left: 16, right: 16, bottom: 4),
+                        padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                             color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.black12, blurRadius: 5)
-                            ]),
+                            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                         child: TextField(
                           controller: model.nameTextController,
                           textCapitalization: TextCapitalization.words,
@@ -145,14 +133,11 @@ class HomeViewState extends State<HomeView> {
                       Container(
                         width: _width / 1.2,
                         height: 45,
-                        padding: EdgeInsets.only(
-                            top: 4, left: 16, right: 16, bottom: 4),
+                        padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                             color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.black12, blurRadius: 5)
-                            ]),
+                            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                         child: TextField(
                           controller: model.descriptionTextController,
                           textCapitalization: TextCapitalization.words,
@@ -168,14 +153,11 @@ class HomeViewState extends State<HomeView> {
                       Container(
                         width: _width / 1.2,
                         height: 45,
-                        padding: EdgeInsets.only(
-                            top: 4, left: 16, right: 16, bottom: 4),
+                        padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                             color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.black12, blurRadius: 5)
-                            ]),
+                            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                         child: TextField(
                           controller: model.priceTextController,
                           keyboardType: TextInputType.number,
@@ -203,18 +185,13 @@ class HomeViewState extends State<HomeView> {
                           height: 45,
                           width: _width / 1.2,
                           decoration: BoxDecoration(
-                              color: model.editMode
-                                  ? Colors.teal
-                                  : Colors.green[800],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50))),
+                              color: model.editMode ? Colors.teal : Colors.green[800],
+                              borderRadius: BorderRadius.all(Radius.circular(50))),
                           child: Center(
                             child: model.viewState == ViewState.Idle
                                 ? Text(
                                     model.editMode ? 'EDITAR' : 'CREAR',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   )
                                 : CircularProgressIndicator(
                                     strokeWidth: 2,
@@ -242,14 +219,10 @@ class HomeViewState extends State<HomeView> {
                       child: Align(
                         alignment: Alignment.center,
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 20, top: 20, left: 65),
+                          padding: const EdgeInsets.only(bottom: 20, top: 20, left: 65),
                           child: Text(
                             'Comidas/Bebidas',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -257,8 +230,7 @@ class HomeViewState extends State<HomeView> {
                     InkWell(
                       onTap: () {
                         List args = [model.orderItems];
-                        Navigator.of(context)
-                            .pushNamed('/previewOrderView', arguments: args);
+                        Navigator.of(context).pushNamed('/previewOrderView', arguments: args);
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 15),
@@ -276,16 +248,11 @@ class HomeViewState extends State<HomeView> {
                                 child: Container(
                                   width: 20,
                                   decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
+                                      color: Colors.red, borderRadius: BorderRadius.all(Radius.circular(15))),
                                   child: Center(
                                     child: Text(
                                       model.orderItems.length.toString(),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ))
@@ -309,8 +276,7 @@ class HomeViewState extends State<HomeView> {
                       width: 50,
                       child: CircularProgressIndicator(
                         backgroundColor: Colors.orange,
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.orange[800]),
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.orange[800]),
                       ),
                     ),
                   ],
@@ -329,8 +295,7 @@ class HomeViewState extends State<HomeView> {
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                             child: Card(
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 10, 8, 10),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 8, 10),
                                 child: Row(
                                   children: [
                                     Expanded(
@@ -340,52 +305,37 @@ class HomeViewState extends State<HomeView> {
                                             onTap: () {
                                               setState(() {
                                                 model.orderItems.add(menuItem);
-                                                Toast.show("Agregado al pedido",
-                                                    context,
-                                                    duration:
-                                                        Toast.LENGTH_SHORT,
-                                                    gravity: Toast.TOP);
+                                                Toast.show("Agregado al pedido", context,
+                                                    duration: Toast.LENGTH_SHORT, gravity: Toast.TOP);
                                               });
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 20,
-                                                  right: 20,
-                                                  top: 20,
-                                                  bottom: 20),
+                                              padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                                               child: Text(
                                                 "AGREGAR\nA PEDIDO",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.teal,
-                                                    fontSize: 12),
+                                                    fontWeight: FontWeight.bold, color: Colors.teal, fontSize: 12),
                                               ),
                                             ),
                                           ),
                                           Expanded(
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   menuItem.name,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  "Descripción: " +
-                                                      menuItem.description,
+                                                  "Descripción: " + menuItem.description,
                                                   maxLines: 2,
                                                 ),
                                                 Divider(
                                                   height: 10,
                                                   color: Colors.transparent,
                                                 ),
-                                                Text("Precio: " +
-                                                    menuItem.price
-                                                        .toStringAsFixed(1)),
+                                                Text("Precio: \$" + menuItem.price.toStringAsFixed(1)),
                                               ],
                                             ),
                                           ),
@@ -395,12 +345,10 @@ class HomeViewState extends State<HomeView> {
                                     Column(
                                       children: [
                                         Visibility(
-                                          visible:
-                                              Configs.currentUser.isAdmin(),
+                                          visible: Configs.currentUser.isAdmin(),
                                           child: InkWell(
                                             onTap: () {
-                                              model.switchEditMode(
-                                                  menuItem: menuItem);
+                                              model.switchEditMode(menuItem: menuItem);
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.all(5),
@@ -412,18 +360,13 @@ class HomeViewState extends State<HomeView> {
                                           ),
                                         ),
                                         Visibility(
-                                          visible:
-                                              Configs.currentUser.isAdmin(),
+                                          visible: Configs.currentUser.isAdmin(),
                                           child: InkWell(
                                             onTap: () async {
-                                              await model.deleteMenuItem(
-                                                  menuItem: menuItem);
+                                              await model.deleteMenuItem(menuItem: menuItem);
                                               Toast.show(
-                                                  "Comida eliminada con éxito",
-                                                  _scaffoldHomeViewKey
-                                                      .currentContext,
-                                                  duration: Toast.LENGTH_LONG,
-                                                  gravity: Toast.TOP);
+                                                  "Comida eliminada con éxito", _scaffoldHomeViewKey.currentContext,
+                                                  duration: Toast.LENGTH_LONG, gravity: Toast.TOP);
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.all(5),

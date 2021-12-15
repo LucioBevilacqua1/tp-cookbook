@@ -14,8 +14,7 @@ class RegisterUserView extends StatefulWidget {
   _RegisterUserViewState createState() => _RegisterUserViewState();
 }
 
-class _RegisterUserViewState extends State<RegisterUserView>
-    with SingleTickerProviderStateMixin {
+class _RegisterUserViewState extends State<RegisterUserView> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -34,8 +33,7 @@ class _RegisterUserViewState extends State<RegisterUserView>
                 Visibility(
                   visible: Configs.currentUser.role == UserData.ADMIN,
                   child: Padding(
-                    padding:
-                        EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
+                    padding: EdgeInsets.fromLTRB(_width * .1, 15, _width * .1, 15),
                     child: InkWell(
                       onTap: () {
                         setState(() {
@@ -55,8 +53,7 @@ class _RegisterUserViewState extends State<RegisterUserView>
                             Align(
                               alignment: Alignment.center,
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 15, top: 15),
+                                padding: const EdgeInsets.only(bottom: 15, top: 15),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -66,8 +63,7 @@ class _RegisterUserViewState extends State<RegisterUserView>
                                     ),
                                     Text(
                                       'Crear usuario',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
+                                      style: TextStyle(color: Colors.white, fontSize: 18),
                                     ),
                                   ],
                                 ),
@@ -89,15 +85,11 @@ class _RegisterUserViewState extends State<RegisterUserView>
                         Container(
                           width: _width / 1.2,
                           height: 45,
-                          padding: EdgeInsets.only(
-                              top: 4, left: 16, right: 16, bottom: 4),
+                          padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(color: Colors.black12, blurRadius: 5)
-                              ]),
+                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                           child: TextField(
                             controller: model.nameTextController,
                             textCapitalization: TextCapitalization.words,
@@ -113,15 +105,11 @@ class _RegisterUserViewState extends State<RegisterUserView>
                         Container(
                           width: _width / 1.2,
                           height: 45,
-                          padding: EdgeInsets.only(
-                              top: 4, left: 16, right: 16, bottom: 4),
+                          padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(color: Colors.black12, blurRadius: 5)
-                              ]),
+                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                           child: TextField(
                             controller: model.roleTextController,
                             decoration: InputDecoration(
@@ -136,15 +124,11 @@ class _RegisterUserViewState extends State<RegisterUserView>
                         Container(
                           width: _width / 1.2,
                           height: 45,
-                          padding: EdgeInsets.only(
-                              top: 4, left: 16, right: 16, bottom: 4),
+                          padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(color: Colors.black12, blurRadius: 5)
-                              ]),
+                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                           child: TextField(
                             controller: model.emailTextController,
                             decoration: InputDecoration(
@@ -159,15 +143,11 @@ class _RegisterUserViewState extends State<RegisterUserView>
                         Container(
                           width: _width / 1.2,
                           height: 45,
-                          padding: EdgeInsets.only(
-                              top: 4, left: 16, right: 16, bottom: 4),
+                          padding: EdgeInsets.only(top: 4, left: 16, right: 16, bottom: 4),
                           decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(color: Colors.black12, blurRadius: 5)
-                              ]),
+                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]),
                           child: TextField(
                             obscureText: true,
                             controller: model.passwordTextController,
@@ -190,16 +170,12 @@ class _RegisterUserViewState extends State<RegisterUserView>
                             height: 45,
                             width: _width / 1.2,
                             decoration: BoxDecoration(
-                                color: Colors.green[800],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50))),
+                                color: Colors.green[800], borderRadius: BorderRadius.all(Radius.circular(50))),
                             child: Center(
                               child: model.viewState == ViewState.Idle
                                   ? Text(
                                       'Crear'.toUpperCase(),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                     )
                                   : CircularProgressIndicator(
                                       strokeWidth: 2,
@@ -248,8 +224,7 @@ class _RegisterUserViewState extends State<RegisterUserView>
                         width: 50,
                         child: CircularProgressIndicator(
                           backgroundColor: Colors.orange,
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.orange[800]),
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.orange[800]),
                         ),
                       ),
                     ],
@@ -268,15 +243,11 @@ class _RegisterUserViewState extends State<RegisterUserView>
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  Text("Usuario: " +
-                                      user.name.firstName +
-                                      " " +
-                                      user.name.surname),
+                                  Text("Usuario: " + user.name.firstName + " " + user.name.surname),
                                   Text("Email: " + user.email),
                                   Text("Rol: " + user.role),
                                   Text("Última conexión: " +
-                                      DateFormat('EEE, dd/MM/y HH:mm', 'es_ES')
-                                          .format(user.lastSeen.toLocal()))
+                                      DateFormat('EEE, dd/MM/y HH:mm', 'es_ES').format(user.lastSeen.toLocal()))
                                 ],
                               ),
                             ),

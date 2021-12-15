@@ -63,8 +63,7 @@ class PreviewOrderViewState extends State<PreviewOrderView> {
                     width: 50,
                     child: CircularProgressIndicator(
                       backgroundColor: Colors.orange,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Colors.orange[800]),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange[800]),
                     ),
                   ),
                 ],
@@ -90,8 +89,7 @@ class PreviewOrderViewState extends State<PreviewOrderView> {
                                 children: [
                                   Text(orderItem.name),
                                   Text("Descripción: " + orderItem.description),
-                                  Text("Precio: " +
-                                      orderItem.price.toStringAsFixed(1))
+                                  Text("Precio: " + orderItem.price.toStringAsFixed(1))
                                 ],
                               ),
                             ),
@@ -105,8 +103,13 @@ class PreviewOrderViewState extends State<PreviewOrderView> {
         floatingActionButton: FloatingActionButton.extended(
             foregroundColor: Colors.white,
             backgroundColor: Colors.greenAccent[700],
-            onPressed: null,
-            label: Text("Confirmar pedido")),
+            onPressed: model.isLoading
+                ? null
+                : () async {
+                    await model.confirmOrder(context);
+                  },
+            icon: model.isLoading ? Icon(Icons.real_estate_agent_rounded) : null,
+            label: Text(model.isLoading ? "Generando pedido" : "Confirmar pedido")),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:frontend/src/screens/auth/login_user/login_user_view.dart';
 import 'package:frontend/src/screens/auth/register_user/register_user_view.dart';
 import 'package:frontend/src/screens/loading_screen.dart';
 import 'package:frontend/src/screens/main/home/home_view.dart';
+import 'package:frontend/src/screens/main/notifications/notifications_view.dart';
 import 'package:frontend/src/screens/main/preview_order/preview_order_view.dart';
 import 'package:frontend/src/screens/tabs_page_model.dart';
 import 'package:frontend/src/screens/tabs_page_view.dart';
@@ -16,20 +17,15 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(
-            settings: RouteSettings(name: '/'), builder: (_) => LoadingPage());
+        return MaterialPageRoute(settings: RouteSettings(name: '/'), builder: (_) => LoadingPage());
         break;
 
       case '/home':
-        return MaterialPageRoute(
-            settings: RouteSettings(name: '/home'),
-            builder: (_) => TabsPageView());
+        return MaterialPageRoute(settings: RouteSettings(name: '/home'), builder: (_) => TabsPageView());
         break;
 
       case '/auth':
-        return MaterialPageRoute(
-            settings: RouteSettings(name: '/auth'),
-            builder: (_) => LoginUserView());
+        return MaterialPageRoute(settings: RouteSettings(name: '/auth'), builder: (_) => LoginUserView());
         break;
 
       case '/previewOrderView':
@@ -43,23 +39,23 @@ class RouteGenerator {
 
       case '/registerUserView':
         return MaterialPageRoute(
-            settings: RouteSettings(name: '/registerUserView'),
-            builder: (_) => RegisterUserView());
+            settings: RouteSettings(name: '/registerUserView'), builder: (_) => RegisterUserView());
+        break;
+
+      case '/notificationsView':
+        return MaterialPageRoute(
+            settings: RouteSettings(name: '/notificationsView'), builder: (_) => NotificationsView());
         break;
 
       case '/adminUtilities':
-        return MaterialPageRoute(
-            settings: RouteSettings(name: '/adminUtilities'),
-            builder: (_) => HomeView());
+        return MaterialPageRoute(settings: RouteSettings(name: '/adminUtilities'), builder: (_) => HomeView());
         break;
 
       default:
         TabsPageModel tabsPageModel = locator<TabsPageModel>();
         bool isInitialized = tabsPageModel.bottomBar != null;
         if (!settings.name.contains('/') && !isInitialized) {
-          return MaterialPageRoute(
-              settings: RouteSettings(name: '/'),
-              builder: (_) => LoadingPage());
+          return MaterialPageRoute(settings: RouteSettings(name: '/'), builder: (_) => LoadingPage());
         } else {
           return _errorRoute(settings, "Default");
         }

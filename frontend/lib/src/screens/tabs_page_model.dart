@@ -4,6 +4,8 @@ import 'package:frontend/src/screens/auth/register_user/register_user_view.dart'
 import 'package:frontend/src/screens/main/home/home_view.dart';
 import 'package:frontend/src/screens/main/widgets/curved_navigation_bar/curved_navigation_bar.dart';
 
+import 'main/notifications/notifications_view.dart';
+
 class TabsPageModel extends BaseModel {
   List<Widget> pages = [HomeView(), Container(), Container()];
   int selectedIndex = 0;
@@ -27,7 +29,7 @@ class TabsPageModel extends BaseModel {
       // When you tap on a tab the page is added to the list of pages and loaded automatically
       switch (index) {
         case 1:
-          pages[index] = Container();
+          pages[index] = NotificationsView();
           break;
         case 2:
           pages[index] = RegisterUserView();

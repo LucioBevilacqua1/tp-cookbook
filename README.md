@@ -8,6 +8,15 @@ Del lado del mozo la app cuenta con un inicio de sesión ***(rol mozo)*** el cua
 
 Por otra parte se pueden cargar, editar y eliminar comidas y bebidas al sistema ***(rol administrador)*** así cómo también cuentas de mozo y mesas.
 
+## Tecnologías
+
+### Frontend
+  * Flutter
+
+### Backend
+  * Spring boot
+  * Base de datos: firestore
+
 ## Modelo del dominio
 
 ![md](https://i.gyazo.com/0b67e635b1676975f35993cceb810124.png)

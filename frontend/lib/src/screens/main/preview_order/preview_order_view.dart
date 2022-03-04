@@ -103,7 +103,7 @@ class PreviewOrderViewState extends State<PreviewOrderView> {
         floatingActionButton: FloatingActionButton.extended(
             foregroundColor: Colors.white,
             backgroundColor: Colors.greenAccent[700],
-            onPressed: model.isLoading
+            onPressed: model.isLoading || model.allMenuItems.isEmpty
                 ? null
                 : () async {
                     await model.confirmOrder(context);

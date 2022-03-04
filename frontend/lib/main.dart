@@ -20,7 +20,7 @@ Future<void> main() async {
     print('----${rec.level.name}: ${rec.loggerName} -> ${rec.message}');
   });
   var configuredApp = AppConfig(
-    baseUrl: "https://23c9-181-12-58-109.ngrok.io/",
+    baseUrl: "https://calm-ridge-54842.herokuapp.com/",
     appTitle: "CookBook",
     child: MyApp(
       MaterialApp(

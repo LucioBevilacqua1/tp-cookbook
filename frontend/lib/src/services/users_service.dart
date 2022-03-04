@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/src/config/configs.dart';
 import 'package:frontend/src/model/user_data.dart';
@@ -15,7 +14,6 @@ class UsersService {
   static String usersApiUrl;
 
   static final FirebaseFirestore db = FirebaseFirestore.instance;
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   UsersService({@required BuildContext context}) {
     usersApiUrl = AppConfig.of(context).baseUrl + "api-users/";
@@ -45,10 +43,9 @@ class UsersService {
   /// `@returns` current user
   //------------------------------
   Future<UserData> getCurrentUserAndUpdateData(String uid) async {
-    String deviceToken = await _firebaseMessaging.getToken();
     String url = usersApiUrl + "getCurrentUserAndUpdateUserData/" + uid + ".json";
 
-    var body = {"deviceToken": deviceToken};
+    var body = {"deviceToken": "deviceToken"};
 
     var response = await http.put(Uri.parse(url), body: jsonEncode(body), headers: Configs.headers);
     if (jsonDecode(response.body)["success"]) {

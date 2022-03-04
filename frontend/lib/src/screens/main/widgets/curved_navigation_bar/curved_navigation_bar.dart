@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-
 import 'nav_button.dart';
 import 'nav_custom_painter.dart';
 

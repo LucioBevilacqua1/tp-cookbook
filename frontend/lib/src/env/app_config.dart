@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
 class AppConfig extends InheritedWidget {
@@ -6,8 +5,7 @@ class AppConfig extends InheritedWidget {
   final String appTitle;
   final Widget child;
 
-  AppConfig(
-      {@required this.child, @required this.baseUrl, @required this.appTitle});
+  AppConfig({@required this.child, @required this.baseUrl, @required this.appTitle});
 
   static AppConfig of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType(aspect: AppConfig);

@@ -14,6 +14,7 @@ import com.example.cookbook.utils.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/order")
 public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @CrossOrigin(maxAge = 3600)
     @GetMapping(value = "/getAllOrders.json")
     public ResponseEntity<ResponseDTO> getAllOrders() {
         Map<String, Object> data = new HashMap<>();
@@ -41,6 +44,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(true, data, "", ""));
     }
 
+    @CrossOrigin(maxAge = 3600)
     @RequestMapping(value = "/createOrder.json", method = RequestMethod.POST)
     ResponseEntity<ResponseDTO> createOrder(@RequestBody OrderDTO orderBodyDTO) {
         Map<String, Object> data = new HashMap<>();
@@ -54,6 +58,7 @@ public class OrderController {
         }
     }
 
+    @CrossOrigin(maxAge = 3600)
     @PutMapping(value = "/editOrder/{id}.json")
     public ResponseEntity<ResponseDTO> editOrder(@PathVariable("id") String id,
             @RequestBody OrderDTO orderBodyDTO) {
@@ -68,6 +73,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(true, data, "", ""));
     }
 
+    @CrossOrigin(maxAge = 3600)
     @DeleteMapping(value = "/deleteOrder/{id}.json")
     public ResponseEntity<ResponseDTO> deleteOrder(@PathVariable("id") String id) {
         Map<String, Object> data = new HashMap<>();

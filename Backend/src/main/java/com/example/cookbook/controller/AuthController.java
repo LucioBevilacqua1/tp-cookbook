@@ -12,10 +12,12 @@ import com.example.cookbook.utils.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -23,6 +25,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @CrossOrigin(maxAge = 3600)
     @RequestMapping(value = "/signup.json", method = RequestMethod.POST)
     ResponseEntity<ResponseDTO> signup(@RequestBody SignupDTO signupDTO) {
 		Map<String, Object> data = new HashMap<>();
@@ -37,6 +40,7 @@ public class AuthController {
         }
     }
 
+    @CrossOrigin(maxAge = 3600)
     @RequestMapping(value = "/signin.json", method = RequestMethod.POST)
     ResponseEntity<String> signin(@RequestBody SigninDTO signinDTO) {
         try {

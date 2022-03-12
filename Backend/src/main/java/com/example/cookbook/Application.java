@@ -17,7 +17,7 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 		try {
 			FileInputStream serviceAccount = new FileInputStream(
-					"../Backend/cookbook-dev1-firebase-adminsdk-l7kds-e5ead19e91.json");
+					"cookbook-dev1-firebase-adminsdk-l7kds-e5ead19e91.json");
 
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredentials(GoogleCredentials.fromStream(serviceAccount))

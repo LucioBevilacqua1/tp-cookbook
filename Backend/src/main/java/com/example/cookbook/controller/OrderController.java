@@ -36,7 +36,6 @@ public class OrderController {
         Map<String, Object> data = new HashMap<>();
         try {
             Collection<OrderDTO> orderDTOCollection = orderService.getAll();
-            System.out.println("orderCollection: " + orderDTOCollection.toString());
             data.put("orders", orderDTOCollection);
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error getting Orders", exception);
@@ -50,7 +49,6 @@ public class OrderController {
         Map<String, Object> data = new HashMap<>();
         try {
             OrderDTO newOrder = orderService.create(orderBodyDTO);
-            System.out.println("newOrder: " + newOrder.toString());
             data.put("order", newOrder);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(true, data, "", ""));
         } catch (Exception exception) {
@@ -65,7 +63,6 @@ public class OrderController {
         Map<String, Object> data = new HashMap<>();
         try {
             OrderDTO orderDTOUpdated = orderService.update(id, orderBodyDTO);
-            System.out.println("orderDTOUpdated: " + orderDTOUpdated.toString());
             data.put("order", orderDTOUpdated);
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error getting Order", exception);
